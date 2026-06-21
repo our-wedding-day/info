@@ -10,13 +10,13 @@ const SHEET_TASKS = 'Задачі';
 const HEADERS = [
   'Час', 'Ім\'я', 'Email', 'Участь', 'Гостей', 'Приїзд', 'Welcome 11.09',
   'Вінчання', 'Трансфер', 'Nadiya Palace', 'Заїзд', 'Виїзд', 'Допомога з житлом',
-  'Деталі житла', 'Безалкогольне', 'Зачіска/макіяж', 'Неділя 13.09', 'Алергії', 'Харчування',
+  'Деталі житла', 'Безалкогольне', 'Деталі напоїв', 'Зачіска/макіяж', 'Неділя 13.09', 'Алергії', 'Харчування',
   'Діти', 'Коментар'
 ];
 
 const DATA_KEYS = [
   'name', 'email', 'attend', 'guests', 'arrival', 'welcome', 'church', 'transfer',
-  'hotel', 'hotelCheckIn', 'hotelCheckOut', 'housingHelp', 'housingHelpDetails', 'nonAlcohol', 'beauty',
+  'hotel', 'hotelCheckIn', 'hotelCheckOut', 'housingHelp', 'housingHelpDetails', 'nonAlcohol', 'nonAlcoholDetails', 'beauty',
   'sunday', 'allergies', 'food', 'children', 'comment'
 ];
 
@@ -88,7 +88,7 @@ function createTasks(data) {
     tasks.push(['Бронювання Nadiya Palace', hotelDetails]);
   }
   if (data.beauty === 'Так') tasks.push(['Зачіска/макіяж', data.comment || '']);
-  if (data.nonAlcohol === 'Так') tasks.push(['Безалкогольні напої', data.food || data.comment || '']);
+  if (data.nonAlcohol === 'Так') tasks.push(['Безалкогольні напої', data.nonAlcoholDetails || data.comment || '']);
   if (data.allergies) tasks.push(['Алергії', data.allergies]);
   if (data.food) tasks.push(['Особливості харчування', data.food]);
   if (data.children) tasks.push(['Діти', data.children]);
