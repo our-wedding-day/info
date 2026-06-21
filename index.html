@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Сергій & Вікторія — 12.09.26</title>
+  <meta name="description" content="Запрошення на весілля Сергія та Вікторії · 12 вересня 2026 · Івано-Франківськ. Програма, логістика та підтвердження участі." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Сергій & Вікторія — 12.09.26" />
+  <meta property="og:description" content="Запрошення на весілля · 12 вересня 2026 · Івано-Франківськ" />
+  <meta property="og:image" content="assets/images/hero-ceremony.png" />
+  <meta property="og:locale" content="uk_UA" />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Ms+Madi&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,12 +30,19 @@
       --line: rgba(0, 0, 0, 0.1);
       --line-dark: rgba(0, 0, 0, 0.12);
       --radius: 28px;
-      --photo-filter: saturate(0.82) contrast(1.07) brightness(1.04) sepia(0.05);
+      --photo-filter: sepia(0.14) saturate(0.76) contrast(1.04) brightness(1.02);
       --font-serif: 'Playfair Display', Georgia, serif;
       --font-sans: 'Manrope', sans-serif;
       --font-script: 'Ms Madi', cursive;
     }
     html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
     body {
       font-family: var(--font-sans);
       background: var(--white);
@@ -38,7 +51,20 @@
       font-size: 15px;
       line-height: 1.75;
       -webkit-font-smoothing: antialiased;
+      padding-bottom: 4rem;
     }
+    :focus { outline: none; }
+    :focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 2px;
+    }
+    .skip-link {
+      position: absolute; left: -9999px; top: 0; z-index: 200;
+      padding: 0.75rem 1.25rem; background: var(--black); color: var(--white);
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none;
+    }
+    .skip-link:focus { left: 1rem; top: 1rem; }
 
     /* NAV */
     .site-header {
@@ -69,7 +95,7 @@
     .nav-right { justify-content: flex-end; }
     .nav-left a, .nav-right a {
       color: var(--white); text-decoration: none;
-      font-size: 0.62rem; font-weight: 400; letter-spacing: 0.2em;
+      font-size: 0.68rem; font-weight: 400; letter-spacing: 0.18em;
       text-transform: uppercase; transition: opacity 0.2s;
     }
     .nav-left a:hover, .nav-right a:hover { opacity: 0.5; }
@@ -183,7 +209,11 @@
     }
     .cd-item span:last-child {
       display: block; font-size: 0.62rem; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--gray-400); margin-top: 0.65rem;
+      text-transform: uppercase; color: var(--gray-600); margin-top: 0.65rem;
+    }
+    .countdown-done {
+      font-family: var(--font-serif); font-size: clamp(1.4rem, 4vw, 1.85rem);
+      font-weight: 400; font-style: italic; color: var(--black);
     }
 
     /* SECTIONS */
@@ -265,14 +295,6 @@
     .section-gray .dc-nope strong { color: var(--black); }
     .section-light a,
     .section-gray a { color: var(--black); }
-    .section-light .instax-step,
-    .section-gray .instax-step {
-      background: var(--white); border-color: var(--line-dark); color: var(--gray-600);
-    }
-    .section-light .instax-step strong,
-    .section-gray .instax-step strong { color: var(--gray-400); opacity: 1; }
-    .section-light .instax-guide-img,
-    .section-gray .instax-guide-img { border-color: var(--line-dark); }
     .section-light .contact-group h3,
     .section-gray .contact-group h3 { border-color: var(--line-dark); color: var(--black); }
     .section-light .contact-row .label,
@@ -415,33 +437,15 @@
     }
     .log-highlight p { font-size: 0.88rem; line-height: 1.75; }
 
-    /* PHOTO / GIFTS */
-    .instax-steps {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin: 1.5rem 0;
-    }
-    .instax-step {
-      padding: 1.25rem; background: var(--white);
-      border: 1px solid var(--line-dark); font-size: 0.82rem; line-height: 1.65;
-      border-radius: 12px; color: var(--gray-600);
-    }
-    .instax-step strong {
-      display: block; font-size: 0.6rem; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--gray-400); margin-bottom: 0.45rem;
-    }
-    .instax-guide-img {
-      width: 100%; max-width: 480px; margin: 1.25rem auto 0; display: block;
-      border: 1px solid var(--line-dark);
-      border-radius: var(--radius);
-    }
-
     /* FAQ */
     .faq { display: flex; flex-direction: column; }
     .faq-item { border-top: 1px solid var(--line-dark); }
     .faq-item:last-child { border-bottom: 1px solid var(--line-dark); }
     .faq-q {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1.25rem 0; cursor: pointer; font-family: var(--font-serif);
-      font-size: 1.08rem; font-weight: 400;
+      width: 100%; padding: 1.25rem 0; cursor: pointer; font-family: var(--font-serif);
+      font-size: 1.08rem; font-weight: 400; color: inherit;
+      background: none; border: none; text-align: left;
       list-style: none; user-select: none;
     }
     .faq-q::after {
@@ -475,7 +479,7 @@
     .rsvp-section .section-title em { color: var(--black); font-style: italic; }
     .rsvp-section .section-sub { color: var(--gray-600); text-align: center; }
     .field { margin-bottom: 1.15rem; }
-    .field label {
+    .field > label {
       display: block; font-size: 0.62rem; letter-spacing: 0.16em;
       text-transform: uppercase; color: var(--gray-600); margin-bottom: 0.45rem;
     }
@@ -491,11 +495,23 @@
     }
     .field select option { background: var(--white); color: var(--black); }
     .field textarea { resize: vertical; min-height: 70px; }
-    .field-hint { font-size: 0.78rem; color: var(--gray-400); margin-top: 0.35rem; }
+    .field-hint { font-size: 0.78rem; color: var(--gray-600); margin-top: 0.35rem; }
+    #rsvpAttendingFields { display: block; }
+    #rsvpAttendingFields.is-hidden { display: none; }
+    #rsvpDeclineHint {
+      display: none; font-size: 0.88rem; color: var(--gray-600);
+      line-height: 1.75; margin-bottom: 1rem; padding: 1rem;
+      background: var(--gray-50); border-left: 2px solid var(--gray-300);
+    }
+    #rsvpDeclineHint.is-visible { display: block; }
     #hotelDatesField { display: none; }
     #hotelDatesField.is-visible { display: block; }
     .radio-group { display: flex; gap: 0.65rem; flex-wrap: wrap; }
-    .radio-option { display: flex; align-items: center; gap: 0.45rem; cursor: pointer; }
+    .radio-option {
+      display: flex; align-items: center; gap: 0.5rem; cursor: pointer;
+      font-size: 0.86rem; letter-spacing: normal; text-transform: none;
+      color: var(--black); margin-bottom: 0;
+    }
     .radio-option input[type="radio"] {
       width: 1.05rem; height: 1.05rem; flex-shrink: 0;
       margin: 0; padding: 0; border: none; background: transparent;
@@ -505,8 +521,18 @@
     .radio-option span { font-size: 0.86rem; color: var(--black); }
     #housingHelpDetailsField { display: none; }
     #housingHelpDetailsField.is-visible { display: block; }
+    #transferDetailsField { display: none; }
+    #transferDetailsField.is-visible { display: block; }
     #nonAlcoholDetailsField { display: none; }
     #nonAlcoholDetailsField.is-visible { display: block; }
+    .hp-field {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+    .privacy-note {
+      font-size: 0.72rem; color: var(--gray-600); line-height: 1.65;
+      margin: 0.5rem 0 1rem;
+    }
 
     /* Date picker */
     .date-picker { position: relative; }
@@ -634,13 +660,18 @@
       gap: 0.5rem 1.75rem; margin-bottom: 1.5rem;
     }
     .footer-nav a {
-      color: rgba(255,255,255,0.35); text-decoration: none;
-      font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55); text-decoration: none;
+      font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
     }
     .footer-nav a:hover { color: var(--white); }
     footer .footer-copy {
       font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.4);
+    }
+    .tl-photo.is-hidden { display: none; }
+    .dc-palette-note {
+      font-size: 0.78rem; color: var(--gray-600); text-align: center;
+      margin: -1.5rem auto 2rem; max-width: 480px; line-height: 1.65;
     }
 
     /* SCROLL TOP */
@@ -676,7 +707,6 @@
       .nav-open .nav-mobile { display: flex; }
       .hero-names { font-size: clamp(3rem, 16vw, 4.5rem); }
       .hero-eyebrow, .hero-meta { letter-spacing: 0.22em; }
-      .instax-steps { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       .tl-item { grid-template-columns: 3.5rem 1px 1fr; gap: 0 1rem; }
       .tl-content { grid-template-columns: 1fr; }
@@ -694,31 +724,31 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main">Перейти до контенту</a>
+
 <header class="site-header" id="siteHeader">
-  <nav id="mainNav">
+  <nav id="mainNav" aria-label="Головна навігація">
     <div class="nav-left">
       <a href="#program">Програма</a>
       <a href="#dresscode">Дрес-код</a>
       <a href="#logistics">Логістика</a>
     </div>
     <a href="#" class="nav-logo" aria-label="На початок" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
-      <span class="nav-logo-main">Our Wedding Day</span>
+      <span class="nav-logo-main">Сергій &amp; Вікторія</span>
     </a>
     <div class="nav-right">
       <a href="#photo">Фото</a>
-      <a href="#faq">FAQ</a>
-      <a href="#rsvp">RSVP</a>
-      <a href="#contacts">Контакти</a>
+      <a href="#faq">Часті питання</a>
+      <a href="#rsvp">Підтвердити участь</a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Меню" type="button"><span></span></button>
+    <button class="nav-toggle" id="navToggle" aria-label="Меню" aria-expanded="false" aria-controls="navMobile" type="button"><span></span></button>
     <div class="nav-mobile" id="navMobile">
       <a href="#program">Програма</a>
       <a href="#dresscode">Дрес-код</a>
       <a href="#logistics">Логістика</a>
       <a href="#photo">Фото</a>
-      <a href="#faq">FAQ</a>
-      <a href="#rsvp">RSVP</a>
-      <a href="#contacts">Контакти</a>
+      <a href="#faq">Часті питання</a>
+      <a href="#rsvp">Підтвердити участь</a>
     </div>
   </nav>
 </header>
@@ -732,9 +762,11 @@
   </div>
 </section>
 
-<div class="countdown-bar">
-  <p class="countdown-label">До урочистого дня</p>
-  <div class="countdown">
+<main id="main" tabindex="-1">
+
+<div class="countdown-bar" id="countdownBar" aria-live="polite">
+  <p class="countdown-label" id="countdownLabel">До урочистого дня</p>
+  <div class="countdown" id="countdown">
     <div class="cd-item"><span id="cd-days">—</span><span>днів</span></div>
     <div class="cd-item"><span id="cd-hours">—</span><span>годин</span></div>
     <div class="cd-item"><span id="cd-min">—</span><span>хвилин</span></div>
@@ -754,7 +786,7 @@
         <div class="tl-text">
           <h3>Неформальна зустріч</h3>
           <p class="tl-desc">Спільна вечеря для гостей, які приїдуть заздалегідь. Деталі уточнимо ближче до дати.</p>
-          <p class="tl-note">Вкажіть у формі підтвердження, чи плануєте бути</p>
+          <p class="tl-note">Вкажіть у <a href="#rsvp">формі підтвердження</a>, чи плануєте бути</p>
         </div>
       </div>
     </div>
@@ -767,12 +799,12 @@
         <div class="tl-text">
           <h3>Таїнство вінчання</h3>
           <p class="tl-desc">Збір гостей о 10:45</p>
-          <p class="tl-place"><a href="https://sobor.if.ua" target="_blank" rel="noopener">Свято-Троїцький кафедральний собор ПЦУ</a></p>
+          <p class="tl-place"><a href="https://maps.google.com/?q=%D0%A1%D0%B2%D1%8F%D1%82%D0%BE-%D0%A2%D1%80%D0%BE%D1%97%D1%86%D1%8C%D0%BA%D0%B8%D0%B9+%D1%81%D0%BE%D0%B1%D0%BE%D1%80+%D0%93%D1%80%D1%8E%D0%BD%D0%B2%D0%B0%D0%BB%D1%8C%D0%B4%D1%81%D1%8C%D0%BA%D0%B0+1+%D0%86%D0%B2%D0%B0%D0%BD%D0%BE-%D0%A4%D1%80%D0%B0%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA" target="_blank" rel="noopener">Свято-Троїцький кафедральний собор ПЦУ</a></p>
           <p class="tl-addr">вул. Грюнвальдська, 1 · Івано-Франківськ</p>
           <p class="tl-note">Бути на вінчанні не обов'язково — розпис і банкет для нас головне</p>
           <p class="tl-actions"><a class="text-link" href="https://maps.google.com/?q=Свято-Троїцький+собор+Грюнвальдська+1+Івано-Франківськ" target="_blank" rel="noopener">Маршрут на мапі →</a></p>
         </div>
-        <img class="tl-photo" src="assets/images/church.png" alt="Свято-Троїцький собор" />
+        <img class="tl-photo" src="assets/images/church.png" alt="Свято-Троїцький собор" loading="lazy" onerror="this.classList.add('is-hidden');this.closest('.tl-content').classList.add('tl-content--no-photo')" />
       </div>
     </div>
     <div class="tl-item">
@@ -782,11 +814,11 @@
         <div class="tl-text">
           <h3>Церемонія розпису</h3>
           <p class="tl-desc">О 12:30 на вежі буде welcome drink і фуршет перед початком церемонії</p>
-          <p class="tl-place"><a href="https://nadiyapalace.com/sky-bar/" target="_blank" rel="noopener">Nadiya Palace</a></p>
+          <p class="tl-place"><a href="https://maps.google.com/?q=Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">Nadiya Palace</a></p>
           <p class="tl-addr">вул. Січових Стрільців, 12 · Івано-Франківськ</p>
           <p class="tl-actions"><a class="text-link" href="https://maps.google.com/?q=Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">Маршрут на мапі →</a></p>
         </div>
-        <img class="tl-photo" src="assets/images/tower-vysche-lyubov.png" alt="Nadiya Palace" />
+        <img class="tl-photo" src="assets/images/tower-vysche-lyubov.png" alt="Nadiya Palace" loading="lazy" onerror="this.classList.add('is-hidden');this.closest('.tl-content').classList.add('tl-content--no-photo')" />
       </div>
     </div>
     <div class="tl-item">
@@ -796,11 +828,11 @@
         <div class="tl-text">
           <h3>Святковий банкет</h3>
           <p class="tl-desc">Банкетна зала «Дзеркальна»</p>
-          <p class="tl-place"><a href="https://nadiyapalace.com/restoran/" target="_blank" rel="noopener">OMNIVORE · Nadiya Palace</a></p>
+          <p class="tl-place"><a href="https://maps.google.com/?q=OMNIVORE+Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">OMNIVORE · Nadiya Palace</a></p>
           <p class="tl-addr">вул. Січових Стрільців, 12 · Івано-Франківськ</p>
           <p class="tl-actions"><a class="text-link" href="https://maps.google.com/?q=OMNIVORE+Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">Маршрут на мапі →</a></p>
         </div>
-        <img class="tl-photo" src="assets/images/omnivore-hall.png" alt="Ресторан OMNIVORE" />
+        <img class="tl-photo" src="assets/images/omnivore-hall.png" alt="Ресторан OMNIVORE" loading="lazy" onerror="this.classList.add('is-hidden');this.closest('.tl-content').classList.add('tl-content--no-photo')" />
       </div>
     </div>
 
@@ -812,11 +844,16 @@
         <div class="tl-text">
           <h3>After day</h3>
           <p class="tl-desc">Попередньо плануємо орендувати будинок з басейном і мангалом — просто ще один день відпочинку разом. План поки попередній, деталі повідомимо пізніше.</p>
-          <p class="tl-note">Вкажіть у формі, чи цікавить вам участь</p>
+          <p class="tl-note">Вкажіть у <a href="#rsvp">формі підтвердження</a>, чи цікавить вам участь</p>
         </div>
       </div>
     </div>
 
+  </div>
+
+  <div class="log-block" style="margin-top:2.5rem">
+    <h3>Організатор</h3>
+    <p>З організаційних питань — до Яни: <a href="tel:+380667795008">+38 066 779 50 08</a>, <a href="https://t.me/dayX_yana" target="_blank" rel="noopener">Telegram @dayX_yana</a>.</p>
   </div>
 </section>
 
@@ -825,34 +862,42 @@
   <p class="section-sub">Найголовніше — щоб ви почувалися комфортно та залишалися собою.</p>
   <div class="brush-palette" aria-label="Палітра кольорів">
     <span class="brush" style="--bc:#faf8f4"></span>
-    <span class="brush brush--flip" style="--bc:#ede6dc"></span>
-    <span class="brush brush--tilt-l" style="--bc:#ddd5c8"></span>
+    <span class="brush brush--flip" style="--bc:#e8e0d4"></span>
+    <span class="brush brush--tilt-l" style="--bc:#ede6dc"></span>
     <span class="brush brush--tilt-r" style="--bc:#c9b9a5"></span>
-    <span class="brush brush--flip brush--tilt-l" style="--bc:#a89888"></span>
-    <span class="brush" style="--bc:#b0aaa0"></span>
-    <span class="brush brush--flip" style="--bc:#3d3428"></span>
-    <span class="brush brush--tilt-l" style="--bc:#ece4c8"></span>
-    <span class="brush brush--tilt-r" style="--bc:#c9a86c"></span>
-    <span class="brush brush--flip brush--tilt-l" style="--bc:#b8956a"></span>
-    <span class="brush" style="--bc:#d4a078"></span>
-    <span class="brush brush--flip" style="--bc:#edd8d0"></span>
-    <span class="brush brush--tilt-l" style="--bc:#e0a8b8"></span>
-    <span class="brush brush--tilt-r" style="--bc:#c88870"></span>
+    <span class="brush brush--flip brush--tilt-l" style="--bc:#d4d0c8"></span>
+    <span class="brush" style="--bc:#8a8480"></span>
+    <span class="brush brush--flip" style="--bc:#786858"></span>
+    <span class="brush brush--tilt-l" style="--bc:#3d3428"></span>
+    <span class="brush brush--tilt-r" style="--bc:#ece4c8"></span>
+    <span class="brush brush--flip brush--tilt-l" style="--bc:#c9a86c"></span>
+    <span class="brush" style="--bc:#e0d4b0"></span>
+    <span class="brush brush--flip" style="--bc:#f5e0c8"></span>
+    <span class="brush brush--tilt-l" style="--bc:#c88870"></span>
+    <span class="brush brush--tilt-r" style="--bc:#edd8d0"></span>
+    <span class="brush brush--flip brush--tilt-l" style="--bc:#e0a8b8"></span>
+    <span class="brush" style="--bc:#f0c8b8"></span>
+    <span class="brush brush--flip" style="--bc:#d08878"></span>
+    <span class="brush brush--tilt-l" style="--bc:#c87868"></span>
+    <span class="brush brush--tilt-r" style="--bc:#7a4858"></span>
     <span class="brush brush--flip brush--tilt-l" style="--bc:#c8cfc2"></span>
-    <span class="brush" style="--bc:#98a890"></span>
-    <span class="brush brush--flip" style="--bc:#7a8a70"></span>
-    <span class="brush brush--tilt-l" style="--bc:#5a6848"></span>
-    <span class="brush brush--tilt-r" style="--bc:#d4b0a8"></span>
-    <span class="brush brush--flip brush--tilt-l" style="--bc:#886878"></span>
-    <span class="brush" style="--bc:#7a4858"></span>
-    <span class="brush brush--flip" style="--bc:#d0dce4"></span>
-    <span class="brush brush--tilt-l" style="--bc:#98b4c4"></span>
-    <span class="brush brush--tilt-r" style="--bc:#a8c4d4"></span>
-    <span class="brush brush--flip brush--tilt-l" style="--bc:#5a6878"></span>
-    <span class="brush" style="--bc:#ddd4e4"></span>
-    <span class="brush brush--flip" style="--bc:#b8aec8"></span>
-    <span class="brush brush--tilt-l" style="--bc:#9888a0"></span>
+    <span class="brush" style="--bc:#5a6848"></span>
+    <span class="brush brush--flip" style="--bc:#c8e8e4"></span>
+    <span class="brush brush--tilt-l" style="--bc:#589890"></span>
+    <span class="brush brush--tilt-r" style="--bc:#d0e4f0"></span>
+    <span class="brush brush--flip brush--tilt-l" style="--bc:#78a8c0"></span>
+    <span class="brush" style="--bc:#8898b0"></span>
+    <span class="brush brush--flip" style="--bc:#384858"></span>
+    <span class="brush brush--tilt-l" style="--bc:#ddd4e4"></span>
+    <span class="brush brush--tilt-r" style="--bc:#9898c8"></span>
+    <span class="brush brush--flip brush--tilt-l" style="--bc:#9888a0"></span>
+    <span class="brush" style="--bc:#985838"></span>
+    <span class="brush brush--flip" style="--bc:#98a890"></span>
+    <span class="brush brush--tilt-l" style="--bc:#b8956a"></span>
+    <span class="brush brush--tilt-r" style="--bc:#886878"></span>
+    <span class="brush brush--flip brush--tilt-l" style="--bc:#98b4c4"></span>
   </div>
+  <p class="dc-palette-note">Палітра — орієнтир для натхнення: пастельні, природні та м'які відтінки.</p>
   <p class="dc-text">
     Будемо вдячні, якщо ви підтримаєте стилістику свята — природні, м'які та пастельні відтінки. Одягайтеся так, щоб вам було зручно святкувати цілий день.
   </p>
@@ -862,105 +907,89 @@
 </section>
 
 <section class="section section-gray" id="logistics">
-  <p class="section-tag">Дорога та проживання</p>
   <h2 class="section-title">Логістика</h2>
   <p class="section-sub">Як дістатися, де залишити авто і де зупинитися.</p>
 
   <div class="log-block">
     <h3>Паркування біля собору</h3>
-    <p>Біля <a href="https://sobor.if.ua" target="_blank" rel="noopener">Свято-Троїцького собору</a> (вул. Грюнвальдська, 1) є власний паркінг — справа від входу в храм, заїзд з вулиці Грюнвальдської. Рекомендуємо приїхати трохи раніше, щоб знайти місце.</p>
-  </div>
-
-  <div class="log-block">
-    <h3>Від собору до готелю · ~1,1 км</h3>
-    <p>Трансфер від церкви до готелю <strong>не плануємо</strong> — це коротка прогулянка центром (~12–15 хв).</p>
-    <ul>
-      <li>Вийдіть від собору на вул. Грюнвальдську в бік центру</li>
-      <li>Поверніть на вул. Незалежності — головну пішохідну вулицю міста</li>
-      <li>Йдіть повз Ратушу до вул. Шевченка (пішохідна зона)</li>
-      <li>Nadiya Palace — праворуч, вул. Січових Стрільців, 12 (вхід з боку Шевченка)</li>
-    </ul>
-    <p style="margin-top:0.5rem"><a class="text-link" href="https://maps.google.com/dir/Свято-Троїцький+собор+Грюнвальдська+1/Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">Маршрут пішки на Google Maps →</a></p>
+    <p>Біля <a href="https://maps.google.com/?q=%D0%A1%D0%B2%D1%8F%D1%82%D0%BE-%D0%A2%D1%80%D0%BE%D1%97%D1%86%D1%8C%D0%BA%D0%B8%D0%B9+%D1%81%D0%BE%D0%B1%D0%BE%D1%80+%D0%93%D1%80%D1%8E%D0%BD%D0%B2%D0%B0%D0%BB%D1%8C%D0%B4%D1%81%D1%8C%D0%BA%D0%B0+1+%D0%86%D0%B2%D0%B0%D0%BD%D0%BE-%D0%A4%D1%80%D0%B0%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA" target="_blank" rel="noopener">Свято-Троїцького собору</a> є власний паркінг — справа від входу в храм, заїзд з вулиці Грюнвальдської. Рекомендуємо приїхати трохи раніше, щоб знайти місце.</p>
   </div>
 
   <div class="log-block">
     <h3>Паркування біля готелю</h3>
-    <p>Біля Nadiya Palace зручно залишити авто на вул. Шевченка — пішохідній зоні, що починається одразу праворуч від входу в готель. Також можливе платне паркування на прилеглих вулицях центру (вул. Галицька, площа Ринок тощо).</p>
+    <p>Біля <a href="https://maps.google.com/?q=Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">Nadiya Palace</a> зручно залишити авто на вул. Шевченка — пішохідній зоні, що починається одразу праворуч від входу в готель. Також можливе платне паркування на прилеглих вулицях центру (вул. Січових стрільців, вул. Чорновола, вул. Мазепи, тощо).</p>
   </div>
 
-  <div class="log-highlight">
-    <p><strong>Гостям нашого весілля — знижка 50%</strong> на проживання в готелі Nadiya Palace. При бронюванні повідомте, що їдете на весілля Сергія та Вікторії.</p>
-    <p style="margin-top:0.5rem">Бронювання: <a href="tel:+380505851188">+38 (050) 585-11-88</a> · <a href="mailto:res@nadiyapalace.com">res@nadiyapalace.com</a></p>
-    <p style="margin-top:0.75rem">Для гостей готелю доступний <a href="https://nadiyapalace.com/wellness/" target="_blank" rel="noopener">Wellness</a> (басейн, сауни, зал) — включено у вартість номера. Дитячі ліжечка можна замовити при бронюванні (діти до 3 років — безкоштовно).</p>
+  <div class="log-block">
+    <h3>Житло на час події</h3>
+    <p><strong>Гостям нашого весілля — знижка 50%</strong> на проживання в готелі <a href="https://nadiyapalace.com/" target="_blank" rel="noopener">Nadiya Palace</a>, де проводитиметься церемонія і святкування. При бронюванні повідомте, що їдете на весілля Сергія та Вікторії і хочете отримати знижку.</p>
+    <p style="margin-top:0.5rem">Бронювання: <a href="tel:+380505851188">+38 (050) 585-11-88</a></p>
+    <p style="margin-top:0.75rem">Для гостей готелю доступна <a href="https://nadiyapalace.com/wellness/" target="_blank" rel="noopener">Wellness</a> зона (басейн, сауни, зал). Дитячі ліжечка можна замовити при бронюванні.</p>
+    <p style="margin-top:0.75rem">Якщо плануєте зупинитися в іншому місці — варіанти можна знайти на <a href="https://www.booking.com/searchresults.html?ss=%D0%86%D0%B2%D0%B0%D0%BD%D0%BE-%D0%A4%D1%80%D0%B0%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%2C+%D0%86%D0%B2%D0%B0%D0%BD%D0%BE-%D0%A4%D1%80%D0%B0%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B0&ssne=Vinnytsya&ssne_untouched=Vinnytsya&efdco=1&label=gen173nr-10CAEoggI46AdIM1gEaOkBiAEBmAEzuAEHyAEN2AED6AEB-AEBiAIBqAIBuAK60N_RBsACAdICJGFhNDMyNjFiLTdiYjMtNDdhNS04NzZjLTY1NGQ5OTQxMzhhMtgCAeACAQ&aid=304142&lang=en-us&sb=1&src_elem=sb&src=index&dest_id=-1040327&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=uk&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=6e4d5f5dc64200ba&ac_meta=GhA2ZTRkNWY1ZGM2NDIwMGJhIAAoATICdWs6CtCG0LLQsNC90L4%3D&checkin=2026-09-11&checkout=2026-09-13&group_adults=2&no_rooms=1&group_children=0" target="_blank" rel="noopener">Booking.com</a>, <a href="https://www.airbnb.com/s/Ivano~Frankivsk--Ivano~Frankivsk-Oblast/homes?refinement_paths%5B%5D=%2Fhomes&place_id=ChIJHTiwNGzBMEcRwkGe5ZQj09Y&acp_id=6355a9a6-a978-4867-ae5a-42f821a6a6e1&date_picker_type=calendar&checkin=2026-09-11&checkout=2026-09-13&search_type=unknown&query=Ivano-Frankivsk%2C%20Ivano-Frankivsk%20Oblast&flexible_trip_lengths%5B%5D=one_week&monthly_start_date=2026-07-01&monthly_length=3&monthly_end_date=2026-10-01&search_mode=regular_search&price_filter_input_type=2&price_filter_num_nights=2&channel=EXPLORE&adults=2&source=structured_search_input_header" target="_blank" rel="noopener">Airbnb</a> та <a href="https://www.olx.ua/uk/zhytlo-podobovo/podobovo-pohodynno-kvartyry/ivano-frankovsk/" target="_blank" rel="noopener">OLX</a> для апартаментів. Якщо потрібна допомога з пошуком — вкажіть у <a href="#rsvp">формі підтвердження</a>, з радістю допоможемо.</p>
   </div>
 </section>
 
 <section class="section section-light" id="photo">
-  <p class="section-tag">Спогади</p>
   <h2 class="section-title">Фото та відео</h2>
   <p class="section-sub">Знімайте скільки завгодно! Лише просимо не перекривати огляд професійним фотографам під час церемоній.</p>
-  <p class="dc-text">На банкеті буде <strong>зона з камерою Instax</strong> — знімайте, друкуйте і вклеюйте фото в нашу <strong>книгу побажань</strong> з теплими словами для нас.</p>
 
-  <div class="instax-steps">
-    <div class="instax-step"><strong>1 · Увімкніть</strong>Поверніть об'єктив, щоб увімкнути камеру. Загориться індикатор.</div>
-    <div class="instax-step"><strong>2 · Знімайте</strong>Наведіть на об'єкт і натисніть кнопку спуску.</div>
-    <div class="instax-step"><strong>3 · Очікуйте</strong>Фото з'явиться зверху. Не витягуйте — зачекайте 1–2 хв, поки проявиться.</div>
-    <div class="instax-step"><strong>4 · Обережно</strong>Не трясіть і не згинайте. Не торкайтесь зображення, поки воно проявляється.</div>
-    <div class="instax-step"><strong>5 · Селфі</strong>Поверніть об'єктив ще раз — увімкнеться режим крупного плану. Ідеально для селфі!</div>
-    <div class="instax-step"><strong>6 · Книга</strong>Прикріпіть фото в книгу побажань і залиште кілька теплих слів 🤍</div>
+  <div class="log-block">
+    <h3>Поділіться своїми фото</h3>
+    <p>Ми будемо вдячні, якщо всі фото з весілля додасте в <a href="https://drive.google.com/drive/folders/1BAPXBRxfT0pxLVe72sDcSHlPkWGZb66u" target="_blank" rel="noopener">спільну папку Google Drive</a>.</p>
   </div>
-  <img class="instax-guide-img" src="assets/images/instax-guide.png" alt="Інструкція Instax" loading="lazy" />
-</section>
 
-<section class="section section-gray" id="gifts">
-  <p class="section-tag">Подарунки</p>
-  <h2 class="section-title">Подарунки</h2>
-  <p class="dc-text">Найкращий подарунок — ваша присутність. Якщо хочете нас порадувати — замість квітів будемо раді <strong>сертифікату на квіти</strong> (вони радуватимуть нас цілий рік) або <strong>пляшці вина</strong> 🤍</p>
+  <div class="log-block">
+    <h3>Фото для гостей</h3>
+    <p>Фото з весілля для гостей будуть викладені <a href="https://drive.google.com/drive/folders/1Qt5VaWXVbQT-j1tQV87wMul1xdKtXKdE" target="_blank" rel="noopener">тут</a>.</p>
+  </div>
 </section>
 
 <section class="section section-light" id="faq">
-  <p class="section-tag">Питання</p>
-  <h2 class="section-title">FAQ</h2>
+  <h2 class="section-title">Часті питання</h2>
   <div class="faq">
     <div class="faq-item">
-      <p class="faq-q">Що робити, якщо запізнююся?</p>
-      <p class="faq-a">Напишіть Яні в Telegram <a href="https://t.me/dayX_yana" target="_blank" rel="noopener">@dayX_yana</a> або зателефонуйте <a href="tel:+380667795008">+38 066 779 50 08</a>.</p>
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-1" id="faq-q-1">З яких питань можна звернутись до організатора?</button>
+      <div class="faq-a" id="faq-a-1" role="region" aria-labelledby="faq-q-1">З організаційних питань — до Яни: Telegram <a href="https://t.me/dayX_yana" target="_blank" rel="noopener">@dayX_yana</a> або <a href="tel:+380667795008">+38 066 779 50 08</a>.</div>
     </div>
     <div class="faq-item">
-      <p class="faq-q">Чи можна прийти з дітьми?</p>
-      <p class="faq-a">Так, ми будемо раді вашим дітям! Вкажіть їх кількість і вік у формі підтвердження.</p>
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-2" id="faq-q-2">Що робити, якщо запізнююся?</button>
+      <div class="faq-a" id="faq-a-2" role="region" aria-labelledby="faq-q-2">Напишіть Яні в Telegram <a href="https://t.me/dayX_yana" target="_blank" rel="noopener">@dayX_yana</a> або зателефонуйте <a href="tel:+380667795008">+38 066 779 50 08</a>.</div>
     </div>
     <div class="faq-item">
-      <p class="faq-q">Чи буде трансфер між локаціями?</p>
-      <p class="faq-a">Від собору до готелю — ні, це 1,1 км пішки. Інші трансфери можливі — вкажіть потребу в опитнику.</p>
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-3" id="faq-q-3">Чи можна прийти з дітьми?</button>
+      <div class="faq-a" id="faq-a-3" role="region" aria-labelledby="faq-q-3">Так, ми будемо раді вашим дітям! Вкажіть їх кількість і вік у <a href="#rsvp">формі підтвердження</a>.</div>
     </div>
     <div class="faq-item">
-      <p class="faq-q">Чи буде безалкогольний варіант?</p>
-      <p class="faq-a">Так. Якщо є особливі вподобання — вкажіть у формі підтвердження.</p>
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-4" id="faq-q-4">Чи буде трансфер між локаціями?</button>
+      <div class="faq-a" id="faq-a-4" role="region" aria-labelledby="faq-q-4">Від собору до готелю — ні, це 1,1 км пішки. Інші трансфери можливі — вкажіть потребу в <a href="#rsvp">формі підтвердження</a>.</div>
     </div>
     <div class="faq-item">
-      <p class="faq-q">До коли підтвердити участь?</p>
-      <p class="faq-a">Будь ласка, до <strong>12 серпня 2026</strong> — це допоможе нам краще підготуватися.</p>
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-5" id="faq-q-5">Чи буде безалкогольний варіант?</button>
+      <div class="faq-a" id="faq-a-5" role="region" aria-labelledby="faq-q-5">Так. Якщо є особливі вподобання — вкажіть у <a href="#rsvp">формі підтвердження</a>.</div>
     </div>
     <div class="faq-item">
-      <p class="faq-q">Де зупинитися в Івано-Франківську?</p>
-      <p class="faq-a">Рекомендуємо Nadiya Palace — там розпис і банкет. Гостям весілля <strong>−50%</strong> на номери. Якщо потрібна допомога з пошуком іншого житла — вкажіть у формі, з радістю допоможемо.</p>
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-6" id="faq-q-6">До коли підтвердити участь?</button>
+      <div class="faq-a" id="faq-a-6" role="region" aria-labelledby="faq-q-6">Будь ласка, до <strong>12 серпня 2026</strong> — це допоможе нам краще підготуватися.</div>
     </div>
     <div class="faq-item">
-      <p class="faq-q">Чи можна зробити зачіску чи макіяж у готелі?</p>
-      <p class="faq-a">Так, вранці в день весілля можна приєднатися до нареченої в її кімнаті (або в салоні, якщо бажаючих буде багато). Вкажіть інтерес у формі — узгодимо деталі.</p>
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-7" id="faq-q-7">Де зупинитися в Івано-Франківську?</button>
+      <div class="faq-a" id="faq-a-7" role="region" aria-labelledby="faq-q-7">Гостям весілля — <strong>знижка 50%</strong> на проживання в <a href="https://nadiyapalace.com/" target="_blank" rel="noopener">Nadiya Palace</a>, де проводитиметься церемонія і святкування. При бронюванні повідомте, що їдете на весілля Сергія та Вікторії: <a href="tel:+380505851188">+38 (050) 585-11-88</a>. Для гостей готелю доступна <a href="https://nadiyapalace.com/wellness/" target="_blank" rel="noopener">wellness-зона</a>; дитячі ліжечка можна замовити при бронюванні. Інші варіанти — на <a href="https://www.booking.com/searchresults.html?ss=%D0%86%D0%B2%D0%B0%D0%BD%D0%BE-%D0%A4%D1%80%D0%B0%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%2C+%D0%86%D0%B2%D0%B0%D0%BD%D0%BE-%D0%A4%D1%80%D0%B0%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B0&ssne=Vinnytsya&ssne_untouched=Vinnytsya&efdco=1&label=gen173nr-10CAEoggI46AdIM1gEaOkBiAEBmAEzuAEHyAEN2AED6AEB-AEBiAIBqAIBuAK60N_RBsACAdICJGFhNDMyNjFiLTdiYjMtNDdhNS04NzZjLTY1NGQ5OTQxMzhhMtgCAeACAQ&aid=304142&lang=en-us&sb=1&src_elem=sb&src=index&dest_id=-1040327&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=uk&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=6e4d5f5dc64200ba&ac_meta=GhA2ZTRkNWY1ZGM2NDIwMGJhIAAoATICdWs6CtCG0LLQsNC90L4%3D&checkin=2026-09-11&checkout=2026-09-13&group_adults=2&no_rooms=1&group_children=0" target="_blank" rel="noopener">Booking.com</a>, <a href="https://www.airbnb.com/s/Ivano~Frankivsk--Ivano~Frankivsk-Oblast/homes?refinement_paths%5B%5D=%2Fhomes&place_id=ChIJHTiwNGzBMEcRwkGe5ZQj09Y&acp_id=6355a9a6-a978-4867-ae5a-42f821a6a6e1&date_picker_type=calendar&checkin=2026-09-11&checkout=2026-09-13&search_type=unknown&query=Ivano-Frankivsk%2C%20Ivano-Frankivsk%20Oblast&flexible_trip_lengths%5B%5D=one_week&monthly_start_date=2026-07-01&monthly_length=3&monthly_end_date=2026-10-01&search_mode=regular_search&price_filter_input_type=2&price_filter_num_nights=2&channel=EXPLORE&adults=2&source=structured_search_input_header" target="_blank" rel="noopener">Airbnb</a> та <a href="https://www.olx.ua/uk/zhytlo-podobovo/podobovo-pohodynno-kvartyry/ivano-frankovsk/" target="_blank" rel="noopener">OLX</a>. Детальніше — у розділі <a href="#logistics">«Логістика»</a>; якщо потрібна допомога — вкажіть у <a href="#rsvp">формі підтвердження</a>.</div>
     </div>
     <div class="faq-item">
-      <p class="faq-q">Чи обов'язково бути на вінчанні?</p>
-      <p class="faq-a">Ні. Для нас найважливіше — розпис і банкет. Але якщо хочете — будемо дуже раді.</p>
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-8" id="faq-q-8">Чи можна зробити зачіску чи макіяж у готелі?</button>
+      <div class="faq-a" id="faq-a-8" role="region" aria-labelledby="faq-q-8">Так, вранці в день весілля можна приєднатися до нареченої в її кімнаті (або в салоні, якщо бажаючих буде багато). Вкажіть інтерес у <a href="#rsvp">формі підтвердження</a> — узгодимо деталі.</div>
     </div>
     <div class="faq-item">
-      <p class="faq-q">Що взяти з собою?</p>
-      <p class="faq-a">Гарний настрій, зручне взуття для прогулянки центром між локаціями та бажання трохи потанцювати.</p>
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-9" id="faq-q-9">Чи обов'язково бути на вінчанні?</button>
+      <div class="faq-a" id="faq-a-9" role="region" aria-labelledby="faq-q-9">Ні. Для нас найважливіше — розпис і банкет. Але якщо хочете — будемо дуже раді.</div>
     </div>
     <div class="faq-item">
-      <p class="faq-q">Де знайти фото після весілля?</p>
-      <p class="faq-a">Після свята поділимося посиланням на галерею через цю сторінку та особисто.</p>
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-10" id="faq-q-10">Що взяти з собою?</button>
+      <div class="faq-a" id="faq-a-10" role="region" aria-labelledby="faq-q-10">Гарний настрій, зручне взуття для прогулянки центром між локаціями та бажання трохи потанцювати.</div>
+    </div>
+    <div class="faq-item">
+      <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-11" id="faq-q-11">Де знайти фото після весілля?</button>
+      <div class="faq-a" id="faq-a-11" role="region" aria-labelledby="faq-q-11">Фото з весілля будуть у <a href="https://drive.google.com/drive/folders/1Qt5VaWXVbQT-j1tQV87wMul1xdKtXKdE" target="_blank" rel="noopener">спільній папці Google Drive</a>. Посилання завжди можна знайти в розділі <a href="#photo">«Фото та відео»</a> на цій сторінці.</div>
     </div>
   </div>
 </section>
@@ -972,13 +1001,17 @@
     <p class="section-sub" style="margin-bottom:2rem">Будь ласка, заповніть форму до <strong>12 серпня 2026</strong></p>
 
     <form class="rsvp-form" id="rsvpForm">
+      <div class="field hp-field" aria-hidden="true">
+        <label for="website">Website</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+      </div>
       <div class="field">
         <label for="name">Ім'я та прізвище *</label>
-        <input type="text" id="name" name="name" placeholder="Іван Петренко" required />
+        <input type="text" id="name" name="name" placeholder="Іван Петренко" maxlength="200" required />
       </div>
       <div class="field">
         <label for="email">Email *</label>
-        <input type="email" id="email" name="email" placeholder="ivan@example.com" required />
+        <input type="email" id="email" name="email" placeholder="ivan@example.com" maxlength="254" required />
         <p class="field-hint">На випадок уточнень — не для розсилок</p>
       </div>
       <div class="field">
@@ -989,6 +1022,8 @@
           <label class="radio-option"><input type="radio" name="attend" value="На жаль, ні" /><span>На жаль, ні</span></label>
         </div>
       </div>
+      <p id="rsvpDeclineHint">Шкода, що не зможете бути. Залиште контакт — і за бажанням короткий коментар нижче.</p>
+      <div id="rsvpAttendingFields">
       <div class="field">
         <label for="guests">Кількість гостей (включно з вами)</label>
         <select id="guests" name="guests">
@@ -1001,7 +1036,7 @@
       </div>
       <div class="field">
         <label for="arrival">Коли плануєте приїхати?</label>
-        <div class="date-picker" data-min="2026-09-10" data-max="2026-09-12">
+        <div class="date-picker" data-min="2026-09-01" data-max="2026-09-30">
           <input type="hidden" id="arrival" name="arrival" />
           <button type="button" class="date-picker-trigger is-placeholder">Оберіть дату</button>
           <div class="date-picker-popup" hidden></div>
@@ -1029,6 +1064,10 @@
           <label class="radio-option"><input type="radio" name="transfer" value="Ні" /><span>Ні</span></label>
         </div>
       </div>
+      <div class="field" id="transferDetailsField">
+        <label for="transferDetails">Деталі трансферу</label>
+        <textarea id="transferDetails" name="transferDetails" maxlength="2000" placeholder="Напр.: з вокзалу до готелю, після святкування до аеропорту, кількість осіб..."></textarea>
+      </div>
       <div class="field">
         <label>Плануєте зупинитися в Nadiya Palace?</label>
         <p class="field-hint" style="margin-bottom:0.5rem">Гостям весілля — знижка 50% на номери. При бронюванні повідомте, що їдете на весілля Сергія та Вікторії.</p>
@@ -1043,7 +1082,7 @@
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.35rem">
           <div>
             <span class="field-hint" style="display:block;margin-bottom:0.25rem">Заїзд</span>
-            <div class="date-picker" data-min="2026-09-10" data-max="2026-09-15">
+            <div class="date-picker" data-min="2026-09-01" data-max="2026-09-30">
               <input type="hidden" id="hotelCheckIn" name="hotelCheckIn" />
               <button type="button" class="date-picker-trigger is-placeholder">Оберіть дату</button>
               <div class="date-picker-popup" hidden></div>
@@ -1051,7 +1090,7 @@
           </div>
           <div>
             <span class="field-hint" style="display:block;margin-bottom:0.25rem">Виїзд</span>
-            <div class="date-picker" data-min="2026-09-11" data-max="2026-09-15">
+            <div class="date-picker" data-min="2026-09-02" data-max="2026-09-30">
               <input type="hidden" id="hotelCheckOut" name="hotelCheckOut" />
               <button type="button" class="date-picker-trigger is-placeholder">Оберіть дату</button>
               <div class="date-picker-popup" hidden></div>
@@ -1069,7 +1108,7 @@
       </div>
       <div class="field" id="housingHelpDetailsField">
         <label for="housingHelpDetails">Що саме шукаєте?</label>
-        <textarea id="housingHelpDetails" name="housingHelpDetails" placeholder="Напр.: квартира на 2 особи, з паркінгом, близько до центру..."></textarea>
+        <textarea id="housingHelpDetails" name="housingHelpDetails" maxlength="2000" placeholder="Напр.: квартира на 2 особи, з паркінгом, близько до центру..."></textarea>
       </div>
       <div class="field">
         <label>Потрібні безалкогольні напої?</label>
@@ -1080,7 +1119,7 @@
       </div>
       <div class="field" id="nonAlcoholDetailsField">
         <label for="nonAlcoholDetails">Які саме напої?</label>
-        <input type="text" id="nonAlcoholDetails" name="nonAlcoholDetails" placeholder="Напр.: вода без газу, соки, лимонад, кола..." />
+        <input type="text" id="nonAlcoholDetails" name="nonAlcoholDetails" maxlength="500" placeholder="Напр.: вода без газу, соки, лимонад, кола..." />
       </div>
       <div class="field">
         <label>Чи потрібна допомога з записом на зачіску / макіяж?</label>
@@ -1099,21 +1138,23 @@
       </div>
       <div class="field">
         <label for="allergies">Алергії</label>
-        <input type="text" id="allergies" name="allergies" placeholder="Напр.: алергія на горіхи, лактоза..." />
+        <input type="text" id="allergies" name="allergies" maxlength="500" placeholder="Напр.: алергія на горіхи, лактоза..." />
       </div>
       <div class="field">
         <label for="food">Особливості харчування</label>
-        <input type="text" id="food" name="food" placeholder="Напр.: вегетаріанство, без м'яса, не їм рибу..." />
+        <input type="text" id="food" name="food" maxlength="500" placeholder="Напр.: вегетаріанство, без м'яса, не їм рибу..." />
         <p class="field-hint">Окремо від алергій — ваші звичні вподобання в їжі</p>
       </div>
       <div class="field">
         <label for="children">Діти (кількість та вік)</label>
-        <input type="text" id="children" name="children" placeholder="Напр.: двоє — 5 і 8 років" />
+        <input type="text" id="children" name="children" maxlength="500" placeholder="Напр.: двоє — 5 і 8 років" />
+      </div>
       </div>
       <div class="field">
-        <label for="comment">Інший коментар</label>
-        <textarea id="comment" name="comment" placeholder="Усе, що важливо нам знати..."></textarea>
+        <label for="comment">Коментар</label>
+        <textarea id="comment" name="comment" maxlength="2000" placeholder="Усе, що важливо нам знати..."></textarea>
       </div>
+      <p class="privacy-note">Надсилаючи форму, ви погоджуєтесь, що ваші дані (ім'я, email та відповіді) використовуються лише для організації весілля і зберігаються до вересня 2026 року. Ми не передаємо їх третім особам і не використовуємо для розсилок.</p>
       <button type="submit" class="submit-btn" id="submitBtn">Надіслати відповідь</button>
     </form>
 
@@ -1126,64 +1167,11 @@
       <p class="form-success-title" id="formSuccessTitle"></p>
       <p class="form-success-text" id="formSuccessText"></p>
     </div>
-    <div class="form-error" id="formError"></div>
+    <div class="form-error" id="formError" role="alert" aria-live="assertive"></div>
   </div>
 </section>
 
-<section class="section section-light" id="contacts">
-  <p class="section-tag">Зв'язок</p>
-  <h2 class="section-title">Контакти</h2>
-  <p class="section-sub">З організаційних питань — до Яни. З бронюванням готелю — до рецепції Nadiya Palace.</p>
-
-  <div class="contacts-organizer" style="border:none;padding-top:0;margin-top:0;margin-bottom:2rem">
-    <p class="contact-name">Яна</p>
-    <p class="contact-role">Організатор</p>
-    <p><a href="tel:+380667795008">+38 066 779 50 08</a></p>
-    <p style="margin-top:0.35rem"><a href="https://t.me/dayX_yana" target="_blank" rel="noopener">Telegram @dayX_yana</a></p>
-  </div>
-
-  <div class="contact-grid">
-    <div class="contact-group">
-      <h3>Nadiya Palace · готель</h3>
-      <div class="contact-row">
-        <p class="label">Адреса</p>
-        <p>вул. Січових Стрільців, 12 · Івано-Франківськ</p>
-      </div>
-      <div class="contact-row">
-        <p class="label">Рецепція</p>
-        <a href="tel:+380505851188">+38 (050) 585-11-88</a><br>
-        <a href="tel:+380685851188">+38 (068) 585-11-88</a>
-      </div>
-      <div class="contact-row">
-        <p class="label">Бронювання</p>
-        <a href="mailto:res@nadiyapalace.com">res@nadiyapalace.com</a>
-      </div>
-    </div>
-    <div class="contact-group">
-      <h3>Корисні посилання</h3>
-      <div class="contact-row">
-        <p class="label">Про місто</p>
-        <a href="https://iftravel.com.ua/" target="_blank" rel="noopener">IF Travel — що подивитися</a>
-      </div>
-      <div class="contact-row">
-        <p class="label">Де поїсти</p>
-        <a href="https://nadiyapalace.com/restoran/" target="_blank" rel="noopener">Ресторан OMNIVORE</a>
-      </div>
-      <div class="contact-row">
-        <p class="label">Де зупинитися</p>
-        <a href="https://nadiyapalace.com/" target="_blank" rel="noopener">Nadiya Palace (−50% для гостей)</a>
-      </div>
-      <div class="contact-row">
-        <p class="label">Booking / Airbnb</p>
-        <a href="https://www.booking.com/city/ua/ivano-frankivsk.uk.html" target="_blank" rel="noopener">Booking.com · Івано-Франківськ</a>
-      </div>
-      <div class="contact-row">
-        <p class="label">Собор</p>
-        <a href="https://sobor.if.ua" target="_blank" rel="noopener">sobor.if.ua</a>
-      </div>
-    </div>
-  </div>
-</section>
+</main>
 
 <footer>
   <nav class="footer-nav" aria-label="Навігація">
@@ -1191,9 +1179,8 @@
     <a href="#dresscode">Дрес-код</a>
     <a href="#logistics">Логістика</a>
     <a href="#photo">Фото</a>
-    <a href="#faq">FAQ</a>
-    <a href="#rsvp">Підтвердження</a>
-    <a href="#contacts">Контакти</a>
+    <a href="#faq">Часті питання</a>
+    <a href="#rsvp">Підтвердити участь</a>
   </nav>
   <p class="footer-copy">Сергій &amp; Вікторія · 12.09.2026</p>
 </footer>
@@ -1202,13 +1189,17 @@
 
 <script>
   // ▼ Вставте URL Google Apps Script після деплою (див. scripts/rsvp-backend.gs)
-  const RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbycHg9McRE41MAa2baeeLa-6KHB7km4PZUC89fm7k14-EraGrQF3mVoBpWYCPwr7JyRGA/exec';
+  const RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwAnL4hJNcUTJT87gsex0VqiMch_fYan8RwMs0fcnkkdYCzEGWw18KLtE9IPbiEfAij1A/exec';
 
   const header = document.getElementById('siteHeader');
   const navToggle = document.getElementById('navToggle');
   const navMobile = document.getElementById('navMobile');
   const scrollTopBtn = document.getElementById('scrollTop');
 
+  function setNavOpen(open) {
+    header.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
 
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 60);
@@ -1216,21 +1207,27 @@
   });
 
   navToggle.addEventListener('click', () => {
-    header.classList.toggle('nav-open');
+    setNavOpen(!header.classList.contains('nav-open'));
   });
   navMobile.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => header.classList.remove('nav-open'));
+    a.addEventListener('click', () => setNavOpen(false));
   });
   document.querySelectorAll('.nav-left a, .nav-right a').forEach(a => {
-    a.addEventListener('click', () => header.classList.remove('nav-open'));
+    a.addEventListener('click', () => setNavOpen(false));
   });
 
   scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   const wDate = new Date('2026-09-12T11:00:00');
+  const countdownEl = document.getElementById('countdown');
+  const countdownLabel = document.getElementById('countdownLabel');
   function tick() {
     const diff = wDate - new Date();
-    if (diff <= 0) { ['cd-days','cd-hours','cd-min'].forEach(id => document.getElementById(id).textContent = '0'); return; }
+    if (diff <= 0) {
+      countdownLabel.textContent = 'Урочистий день настав!';
+      countdownEl.innerHTML = '<p class="countdown-done">Дякуємо, що з нами 🤍</p>';
+      return;
+    }
     document.getElementById('cd-days').textContent = Math.floor(diff / 86400000);
     document.getElementById('cd-hours').textContent = Math.floor((diff % 86400000) / 3600000);
     document.getElementById('cd-min').textContent = Math.floor((diff % 3600000) / 60000);
@@ -1239,10 +1236,16 @@
 
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => {
-      const item = q.parentElement;
+      const item = q.closest('.faq-item');
       const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        item.classList.add('open');
+        q.setAttribute('aria-expanded', 'true');
+      }
     });
   });
 
@@ -1364,6 +1367,7 @@
         const trigger = picker.querySelector('.date-picker-trigger');
         trigger.textContent = formatDateUk(iso);
         trigger.classList.remove('is-placeholder');
+        trigger.setAttribute('aria-label', formatDateUk(iso));
         closeAllDatePickers();
         hidden.dispatchEvent(new Event('change', { bubbles: true }));
       });
@@ -1378,6 +1382,9 @@
     const popup = picker.querySelector('.date-picker-popup');
     const hidden = picker.querySelector('input[type="hidden"]');
     let viewDate = picker.dataset.min ? parseIsoDate(picker.dataset.min) : new Date();
+
+    trigger.setAttribute('aria-haspopup', 'dialog');
+    trigger.setAttribute('aria-label', 'Оберіть дату');
 
     trigger.addEventListener('click', e => {
       e.stopPropagation();
@@ -1405,7 +1412,7 @@
     if (!show) {
       hotelCheckIn.value = '';
       hotelCheckOut.value = '';
-      hotelCheckOut.closest('.date-picker').dataset.min = '2026-09-11';
+      hotelCheckOut.closest('.date-picker').dataset.min = '2026-09-02';
       document.querySelectorAll('#hotelDatesField .date-picker-trigger').forEach(t => {
         t.textContent = 'Оберіть дату';
         t.classList.add('is-placeholder');
@@ -1430,6 +1437,18 @@
   const housingHelpDetailsField = document.getElementById('housingHelpDetailsField');
   const housingHelpDetails = document.getElementById('housingHelpDetails');
 
+  const transferDetailsField = document.getElementById('transferDetailsField');
+  const transferDetails = document.getElementById('transferDetails');
+
+  function syncTransferDetailsField() {
+    const val = document.querySelector('input[name="transfer"]:checked');
+    const show = val && val.value === 'Так';
+    transferDetailsField.classList.toggle('is-visible', show);
+    if (!show) transferDetails.value = '';
+  }
+
+  document.querySelectorAll('input[name="transfer"]').forEach(r => r.addEventListener('change', syncTransferDetailsField));
+
   function syncHousingHelpDetailsField() {
     const help = document.querySelector('input[name="housingHelp"]:checked');
     const show = help && help.value === 'Так';
@@ -1451,29 +1470,66 @@
 
   document.querySelectorAll('input[name="nonAlcohol"]').forEach(r => r.addEventListener('change', syncNonAlcoholDetailsField));
 
+  const rsvpAttendingFields = document.getElementById('rsvpAttendingFields');
+  const rsvpDeclineHint = document.getElementById('rsvpDeclineHint');
+
+  function clearAttendingFieldValues() {
+    rsvpAttendingFields.querySelectorAll('input:not([type="radio"]), select, textarea').forEach(el => {
+      if (el.tagName === 'SELECT' && el.id === 'guests') {
+        el.value = '1';
+      } else {
+        el.value = '';
+      }
+    });
+    rsvpAttendingFields.querySelectorAll('input[type="radio"]').forEach(el => {
+      el.checked = false;
+    });
+    rsvpAttendingFields.querySelectorAll('.date-picker-trigger').forEach(t => {
+      t.textContent = 'Оберіть дату';
+      t.classList.add('is-placeholder');
+    });
+    closeAllDatePickers();
+    syncTransferDetailsField();
+    syncHousingHelpDetailsField();
+    syncNonAlcoholDetailsField();
+    syncHotelDatesField();
+  }
+
+  function syncAttendFields() {
+    const attend = document.querySelector('input[name="attend"]:checked');
+    const isDecline = attend && attend.value === 'На жаль, ні';
+    rsvpAttendingFields.classList.toggle('is-hidden', isDecline);
+    rsvpDeclineHint.classList.toggle('is-visible', isDecline);
+    if (isDecline) clearAttendingFieldValues();
+  }
+
+  document.querySelectorAll('input[name="attend"]').forEach(r => r.addEventListener('change', syncAttendFields));
+
+  const RSVP_EDIT_NOTE = ' Якщо щось зміниться — напишіть Яні в Telegram @dayX_yana або зателефонуйте +38 066 779 50 08.';
+
   function getSuccessMessage(data) {
     if (data.attend === 'На жаль, ні') {
       return {
         title: 'Дякуємо, що відповіли',
-        text: 'Шкода, що не зможете бути — але ми дуже цінуємо, що попередили. Сподіваємось побачитися скоро!'
+        text: 'Шкода, що не зможете бути — але ми дуже цінуємо, що попередили. Сподіваємось побачитися скоро!' + RSVP_EDIT_NOTE
       };
     }
     if (data.attend === 'Під питанням') {
       return {
         title: 'Дякуємо!',
-        text: 'Зафіксували вашу відповідь. Якщо стане зрозуміло — напишіть нам або Яні. Будемо чекати на good news!'
+        text: 'Зафіксували вашу відповідь. Якщо стане зрозуміло — напишіть нам або Яні. Будемо чекати на good news!' + RSVP_EDIT_NOTE
       };
     }
     const uncertain = [data.welcome, data.sunday, data.hotel].includes('Можливо') || data.hotel === 'Ще думаю';
     if (uncertain) {
       return {
         title: 'Дякуємо!',
-        text: 'Отримали вашу відповідь. Якщо щось зміниться — просто дайте знати. Дуже чекаємо на зустріч!'
+        text: 'Отримали вашу відповідь. Якщо щось зміниться — просто дайте знати. Дуже чекаємо на зустріч!' + RSVP_EDIT_NOTE
       };
     }
     return {
       title: 'До зустрічі!',
-      text: 'Вашу відповідь отримано — дуже чекаємо на вас 12 вересня в Івано-Франківську.'
+      text: 'Вашу відповідь отримано — дуже чекаємо на вас 12 вересня в Івано-Франківську.' + RSVP_EDIT_NOTE
     };
   }
 
@@ -1514,17 +1570,27 @@
     }
 
     try {
-      await fetch(RSVP_ENDPOINT, {
+      const res = await fetch(RSVP_ENDPOINT, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ ...data, token: RSVP_TOKEN })
       });
+      const result = await res.json();
+      if (!result.ok) {
+        throw new Error(result.error || 'server_error');
+      }
       showFormSuccess(data);
     } catch (err) {
       loading.classList.remove('is-visible');
       loading.setAttribute('aria-hidden', 'true');
-      errEl.textContent = 'Не вдалося надіслати. Спробуйте ще раз або напишіть Яні в Telegram.';
+      const code = err && err.message;
+      if (code === 'rate_limit') {
+        errEl.textContent = 'Забагато спроб з цим email. Спробуйте пізніше або напишіть Яні в Telegram.';
+      } else if (code === 'validation') {
+        errEl.textContent = 'Перевірте дані форми — ім\'я, email та обов\'язкові поля.';
+      } else {
+        errEl.textContent = 'Не вдалося надіслати. Спробуйте ще раз або напишіть Яні в Telegram.';
+      }
       errEl.style.display = 'block';
       btn.disabled = false;
     }
