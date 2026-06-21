@@ -7,10 +7,10 @@ from playwright.sync_api import sync_playwright
 URL = "https://our-wedding-day.github.io/info/#rsvp"
 
 
-def fill_attending_flow(page, email, comment):
+def fill_attending_flow(page, contact, comment):
     page.goto(URL, wait_until="networkidle", timeout=60000)
     page.fill("#name", "Тест Cursor Автотест")
-    page.fill("#email", email)
+    page.fill("#contact", contact)
     page.check('input[name="attend"][value="Так, буду"]')
     page.click("#rsvpNext")
     page.wait_for_timeout(400)
@@ -23,16 +23,16 @@ def fill_attending_flow(page, email, comment):
     page.wait_for_selector("#hotelDatesField.is-visible")
     page.check('input[name="welcome"][value="Так"]')
     page.check('input[name="church"][value="Так"]')
-    page.click("#rsvpNext")
+    page.check('input[name="sunday"][value="Ні"]')
     page.wait_for_timeout(400)
 
     page.fill("#comment", comment)
 
 
-def fill_decline_flow(page, email):
+def fill_decline_flow(page, contact):
     page.goto(URL, wait_until="networkidle", timeout=60000)
     page.fill("#name", "Тест Cursor Відмова")
-    page.fill("#email", email)
+    page.fill("#contact", contact)
     page.check('input[name="attend"][value="На жаль, ні"]')
     page.wait_for_selector("#rsvpDeclineHint.is-visible")
     page.click("#rsvpNext")
@@ -82,6 +82,7 @@ def run():
     results = []
     ts = int(time.time())
     email_create = f"rsvp-test-{ts}@example.com"
+    phone_create = f"+38067{ts % 10000000:07d}"
     email_decline = f"rsvp-decline-{ts}@example.com"
 
     with sync_playwright() as p:
@@ -89,11 +90,15 @@ def run():
 
         page = browser.new_page()
         fill_attending_flow(page, email_create, "Автотест Playwright — можна видалити")
-        submit_and_collect(page, results, "Create")
+        submit_and_collect(page, results, "Create email")
 
         page = browser.new_page()
         fill_attending_flow(page, email_create, "Оновлено автотестом Playwright")
-        submit_and_collect(page, results, "Update")
+        submit_and_collect(page, results, "Update email")
+
+        page = browser.new_page()
+        fill_attending_flow(page, phone_create, "Автотест телефон — можна видалити")
+        submit_and_collect(page, results, "Create phone")
 
         page = browser.new_page()
         fill_decline_flow(page, email_decline)

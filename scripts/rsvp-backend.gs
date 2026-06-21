@@ -12,23 +12,19 @@ const SHEET_TASKS = 'Задачі';
 const SHEET_SUMMARY = 'Підсумок';
 
 const MAX_NAME_LENGTH = 200;
-const MAX_EMAIL_LENGTH = 254;
-const MAX_SHORT_LENGTH = 500;
+const MAX_CONTACT_LENGTH = 254;
 const MAX_LONG_LENGTH = 2000;
 const RATE_LIMIT_MAX = 3;
 const RATE_LIMIT_SECONDS = 3600;
 
 const HEADERS = [
-  'Час', 'Ім\'я', 'Email', 'Участь', 'Гостей', 'Приїзд', 'Welcome 11.09',
-  'Вінчання', 'Трансфер', 'Деталі трансферу', 'Nadiya Palace', 'Заїзд', 'Виїзд', 'Допомога з житлом',
-  'Деталі житла', 'Безалкогольне', 'Деталі напоїв', 'Зачіска/макіяж', 'Неділя 13.09', 'Алергії', 'Харчування',
-  'Діти', 'Коментар'
+  'Час', 'Ім\'я', 'Контакт', 'Участь', 'Гостей', 'Приїзд', 'Welcome 11.09',
+  'Вінчання', 'Неділя 13.09', 'Логістика та житло', 'Харчування та інше', 'Коментар'
 ];
 
 const DATA_KEYS = [
-  'name', 'email', 'attend', 'guests', 'arrival', 'welcome', 'church', 'transfer', 'transferDetails',
-  'hotel', 'hotelCheckIn', 'hotelCheckOut', 'housingHelp', 'housingHelpDetails', 'nonAlcohol', 'nonAlcoholDetails', 'beauty',
-  'sunday', 'allergies', 'food', 'children', 'comment'
+  'name', 'contact', 'attend', 'guests', 'arrival', 'welcome', 'church', 'sunday',
+  'travelNotes', 'foodNotes', 'comment'
 ];
 
 const ALLOWED = {
@@ -36,25 +32,13 @@ const ALLOWED = {
   guests: ['1', '2', '3', '4', '5+'],
   welcome: ['Так', 'Ні', 'Можливо'],
   church: ['Так', 'Ні'],
-  transfer: ['Так', 'Ні'],
-  hotel: ['Так, потрібен номер', 'Ні', 'Ще думаю'],
-  housingHelp: ['Так', 'Ні'],
-  nonAlcohol: ['Так', 'Ні'],
-  beauty: ['Так', 'Ні'],
   sunday: ['Так', 'Ні', 'Можливо']
 };
 
 const LONG_FIELDS = {
-  transferDetails: MAX_LONG_LENGTH,
-  housingHelpDetails: MAX_LONG_LENGTH,
+  travelNotes: MAX_LONG_LENGTH,
+  foodNotes: MAX_LONG_LENGTH,
   comment: MAX_LONG_LENGTH
-};
-
-const SHORT_FIELDS = {
-  nonAlcoholDetails: MAX_SHORT_LENGTH,
-  allergies: MAX_SHORT_LENGTH,
-  food: MAX_SHORT_LENGTH,
-  children: MAX_SHORT_LENGTH
 };
 
 function doPost(e) {
@@ -81,7 +65,7 @@ function doPost(e) {
 
     var data = validated.data;
 
-    if (!checkRateLimit(data.email)) {
+    if (!checkRateLimit(data.contact)) {
       return jsonResponse({ ok: false, error: 'rate_limit' });
     }
 
@@ -126,13 +110,13 @@ function setupRsvpSecrets() {
 function validatePayload(raw) {
   var data = {};
   var name = trimString(raw.name, MAX_NAME_LENGTH);
-  var email = trimString(raw.email, MAX_EMAIL_LENGTH).toLowerCase();
+  var contact = normalizeContact(raw.contact || raw.email);
 
   if (!name) return { error: 'validation' };
-  if (!email || !isValidEmail(email)) return { error: 'validation' };
+  if (!contact) return { error: 'validation' };
 
   data.name = name;
-  data.email = email;
+  data.contact = contact;
 
   if (ALLOWED.attend.indexOf(raw.attend) === -1) {
     return { error: 'validation' };
@@ -143,7 +127,7 @@ function validatePayload(raw) {
   if (ALLOWED.guests.indexOf(guests) === -1) guests = '1';
   data.guests = guests;
 
-  var optionalKeys = ['welcome', 'church', 'transfer', 'hotel', 'housingHelp', 'nonAlcohol', 'beauty', 'sunday'];
+  var optionalKeys = ['welcome', 'church', 'sunday'];
   for (var i = 0; i < optionalKeys.length; i++) {
     var key = optionalKeys[i];
     var val = raw[key] ? String(raw[key]) : '';
@@ -151,22 +135,13 @@ function validatePayload(raw) {
     data[key] = val;
   }
 
-  var dateKeys = ['arrival', 'hotelCheckIn', 'hotelCheckOut'];
-  for (var j = 0; j < dateKeys.length; j++) {
-    var dateKey = dateKeys[j];
-    var dateVal = trimString(raw[dateKey], 10);
-    if (dateVal && !isValidIsoDate(dateVal)) return { error: 'validation' };
-    data[dateKey] = dateVal;
-  }
+  var arrival = trimString(raw.arrival, 10);
+  if (arrival && !isValidIsoDate(arrival)) return { error: 'validation' };
+  data.arrival = arrival;
 
   var longKey;
   for (longKey in LONG_FIELDS) {
     data[longKey] = sanitizeCell(trimString(raw[longKey], LONG_FIELDS[longKey]));
-  }
-
-  var shortKey;
-  for (shortKey in SHORT_FIELDS) {
-    data[shortKey] = sanitizeCell(trimString(raw[shortKey], SHORT_FIELDS[shortKey]));
   }
 
   return { data: data };
@@ -179,6 +154,43 @@ function trimString(value, maxLen) {
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidPhone(value) {
+  var digits = String(value).replace(/[\s\-().]/g, '');
+  return /^\+?\d{10,15}$/.test(digits) || /^0\d{9}$/.test(digits);
+}
+
+function isValidContact(value) {
+  var v = trimString(value, MAX_CONTACT_LENGTH);
+  return isValidEmail(v) || isValidPhone(v);
+}
+
+function normalizeContact(value) {
+  var v = trimString(value, MAX_CONTACT_LENGTH);
+  if (!v) return '';
+  if (isValidEmail(v)) return v.toLowerCase();
+  if (isValidPhone(v)) return formatPhone(v);
+  return '';
+}
+
+function formatPhone(value) {
+  var digits = String(value).replace(/\D/g, '');
+  if (digits.length === 10 && digits.charAt(0) === '0') {
+    digits = '38' + digits;
+  }
+  return '+' + digits;
+}
+
+function contactMatchKey(value) {
+  var v = String(value || '').trim();
+  if (!v) return '';
+  if (isValidEmail(v)) return v.toLowerCase();
+  var digits = v.replace(/\D/g, '');
+  if (digits.length === 10 && digits.charAt(0) === '0') {
+    digits = '38' + digits;
+  }
+  return digits;
 }
 
 function isValidIsoDate(value) {
@@ -198,9 +210,9 @@ function sanitizeEmailSubjectPart(value) {
   return String(value || 'без імені').replace(/[\r\n]/g, ' ').substring(0, MAX_NAME_LENGTH);
 }
 
-function checkRateLimit(email) {
+function checkRateLimit(contact) {
   var cache = CacheService.getScriptCache();
-  var key = 'rsvp_' + email.replace(/[^a-z0-9@._-]/gi, '').substring(0, 120);
+  var key = 'rsvp_' + contactMatchKey(contact).replace(/[^a-z0-9@._-]/gi, '').substring(0, 120);
   var count = parseInt(cache.get(key) || '0', 10);
   if (count >= RATE_LIMIT_MAX) return false;
   cache.put(key, String(count + 1), RATE_LIMIT_SECONDS);
@@ -222,10 +234,7 @@ function ensureSheets(ss) {
     var s = ss.insertSheet(SHEET_RESPONSES);
     s.appendRow(HEADERS);
   } else {
-    var responses = ss.getSheetByName(SHEET_RESPONSES);
-    if (responses.getLastColumn() < HEADERS.length) {
-      responses.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
-    }
+    ss.getSheetByName(SHEET_RESPONSES).getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
   }
   if (!ss.getSheetByName(SHEET_TASKS)) {
     var t = ss.insertSheet(SHEET_TASKS);
@@ -236,9 +245,10 @@ function ensureSheets(ss) {
   }
 }
 
-function getEmailColumnIndex(headers) {
+function getContactColumnIndex(headers) {
   for (var c = 0; c < headers.length; c++) {
-    if (String(headers[c] || '').trim().toLowerCase() === 'email') {
+    var h = String(headers[c] || '').trim().toLowerCase();
+    if (h === 'contact' || h === 'email' || h === 'контакт' || h.indexOf('контакт') !== -1) {
       return c;
     }
   }
@@ -248,13 +258,13 @@ function getEmailColumnIndex(headers) {
 function upsertResponse(ss, row) {
   var sheet = ss.getSheetByName(SHEET_RESPONSES);
   var values = sheet.getDataRange().getValues();
-  var emailCol = values.length ? getEmailColumnIndex(values[0]) : 2;
-  var email = String(row[2] || '').trim().toLowerCase();
+  var contactCol = values.length ? getContactColumnIndex(values[0]) : 2;
+  var contactKey = contactMatchKey(row[2]);
   var existingRow = -1;
 
-  if (email) {
+  if (contactKey) {
     for (var i = values.length - 1; i >= 1; i--) {
-      if (String(values[i][emailCol] || '').trim().toLowerCase() === email) {
+      if (contactMatchKey(values[i][contactCol]) === contactKey) {
         existingRow = i + 1;
         break;
       }
@@ -284,7 +294,7 @@ function appendTaskUpdateNote(ss, name) {
 }
 
 function sendGuestConfirmation(data, action) {
-  if (!data.email) return;
+  if (!data.contact || !isValidEmail(data.contact)) return;
 
   var subject = action === 'updated'
     ? 'Вашу відповідь оновлено — Сергій & Вікторія'
@@ -313,7 +323,7 @@ function sendGuestConfirmation(data, action) {
   );
 
   try {
-    MailApp.sendEmail(data.email, subject, lines.join('\n'));
+    MailApp.sendEmail(data.contact, subject, lines.join('\n'));
   } catch (err) {
     Logger.log('Guest confirmation failed: ' + err);
   }
@@ -329,7 +339,7 @@ function refreshSummary(ss) {
     maybe: 0,
     no: 0,
     guests: 0,
-    childrenNotes: 0
+    notesCount: 0
   };
 
   for (var i = 1; i < responses.length; i++) {
@@ -342,7 +352,7 @@ function refreshSummary(ss) {
     else if (attend === 'На жаль, ні') stats.no++;
     if (guests === '5+') stats.guests += 5;
     else stats.guests += parseInt(guests, 10) || 1;
-    if (row[21]) stats.childrenNotes++;
+    if (row[9] || row[10]) stats.notesCount++;
   }
 
   sheet.clear();
@@ -352,7 +362,7 @@ function refreshSummary(ss) {
   sheet.appendRow(['Під питанням', stats.maybe]);
   sheet.appendRow(['На жаль, ні', stats.no]);
   sheet.appendRow(['Орієнтовно гостей (max)', stats.guests]);
-  sheet.appendRow(['Відповідей з дітьми', stats.childrenNotes]);
+  sheet.appendRow(['Відповідей з нотатками', stats.notesCount]);
   sheet.appendRow(['Оновлено', new Date()]);
 }
 
@@ -377,19 +387,9 @@ function createTasks(data) {
   var name = data.name || 'Гість';
   var tasks = [];
 
-  if (data.transfer === 'Так') tasks.push(['Потрібен трансфер', data.transferDetails || data.comment || '']);
-  if (data.housingHelp === 'Так') tasks.push(['Допомога з житлом', data.housingHelpDetails || data.comment || '']);
-  if (data.hotel === 'Так, потрібен номер') {
-    var hotelDetails = 'Знижка 50% для гостей весілля';
-    if (data.hotelCheckIn) hotelDetails += ', заїзд: ' + data.hotelCheckIn;
-    if (data.hotelCheckOut) hotelDetails += ', виїзд: ' + data.hotelCheckOut;
-    tasks.push(['Бронювання Nadiya Palace', hotelDetails]);
-  }
-  if (data.beauty === 'Так') tasks.push(['Зачіска/макіяж', data.comment || '']);
-  if (data.nonAlcohol === 'Так') tasks.push(['Безалкогольні напої', data.nonAlcoholDetails || data.comment || '']);
-  if (data.allergies) tasks.push(['Алергії', data.allergies]);
-  if (data.food) tasks.push(['Особливості харчування', data.food]);
-  if (data.children) tasks.push(['Діти', data.children]);
+  if (data.travelNotes) tasks.push(['Логістика та житло', data.travelNotes]);
+  if (data.foodNotes) tasks.push(['Харчування та інше', data.foodNotes]);
+  if (data.comment) tasks.push(['Коментар', data.comment]);
 
   tasks.forEach(function(item) {
     sheet.appendRow([new Date(), sanitizeCell(name), sanitizeCell(item[0]), sanitizeCell(item[1]), 'Нова']);
