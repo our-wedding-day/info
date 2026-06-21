@@ -38,7 +38,7 @@
       --line: rgba(0, 0, 0, 0.1);
       --line-dark: rgba(0, 0, 0, 0.12);
       --radius: 28px;
-      --photo-filter: sepia(0.14) saturate(0.76) contrast(1.04) brightness(1.02);
+      --photo-filter: saturate(0.85) contrast(0.98) brightness(1);
       --font-serif: 'Playfair Display', Georgia, serif;
       --font-sans: 'Manrope', sans-serif;
       --font-script: 'Ms Madi', cursive;
@@ -335,7 +335,10 @@
     }
 
     /* TIMELINE */
-    #program.section { max-width: 920px; }
+    #program.section {
+      max-width: 920px;
+      --photo-filter: saturate(1.18) contrast(1.06) brightness(1.07);
+    }
     .timeline { display: flex; flex-direction: column; }
     .tl-day-header {
       font-family: var(--font-serif); font-size: 1.1rem; font-weight: 400;
@@ -432,6 +435,8 @@
     .brush--flip.brush--tilt-r { transform: scaleX(-1) rotate(4deg); }
     .dc-text { font-size: 0.9rem; line-height: 1.85; text-align: center; }
     .dc-nope { margin-top: 1.25rem; font-size: 0.85rem; text-align: center; }
+    #dresscode .section-sub { margin-bottom: 1.25rem; }
+    #dresscode .dc-nope { margin-bottom: 0.25rem; }
 
     /* LOGISTICS */
     .log-block { margin-bottom: 2rem; }
@@ -546,11 +551,6 @@
       margin: 0.5rem 0 1rem;
     }
     body.nav-lock { overflow: hidden; }
-    .program-route-note {
-      text-align: center; font-size: 0.88rem; color: var(--gray-600);
-      margin: -2rem 0 2.5rem; line-height: 1.7; max-width: 520px;
-      margin-left: auto; margin-right: auto;
-    }
     .tl-cal-btn {
       background: none; border: none; padding: 0; cursor: pointer;
       font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
@@ -820,8 +820,6 @@
 
 <section class="section section-light" id="program">
   <h2 class="section-title">Програма<br><em>святкування</em></h2>
-  <p class="section-sub">Будемо вдячні, якщо ви прибудете на 10–15 хвилин раніше кожної події.</p>
-  <p class="program-route-note">Від собору до Nadiya Palace — близько 1,1 км пішки (~15 хвилин центром).</p>
   <div class="timeline">
 
     <div class="tl-day-header">П'ятниця · 11 вересня 2026</div>
@@ -915,6 +913,12 @@
 <section class="section section-light" id="dresscode">
   <h2 class="section-title">Дрес-код</h2>
   <p class="section-sub">Найголовніше — щоб ви почувалися комфортно та залишалися собою.</p>
+  <p class="dc-text">
+    Будемо вдячні, якщо ви підтримаєте стилістику свята — природні, м'які та пастельні відтінки. Одягайтеся так, щоб вам було зручно святкувати цілий день.
+  </p>
+  <p class="dc-nope">
+    <strong>Краще уникати:</strong> яскравих насичених кольорів і повністю чорного вбрання. Білий для гостей — без проблем 🤍
+  </p>
   <div class="brush-palette" aria-label="Палітра кольорів">
     <span class="brush" style="--bc:#faf8f4"></span>
     <span class="brush brush--flip" style="--bc:#e8e0d4"></span>
@@ -953,12 +957,6 @@
     <span class="brush brush--flip brush--tilt-l" style="--bc:#98b4c4"></span>
   </div>
   <p class="dc-palette-note">Палітра — орієнтир для натхнення: пастельні, природні та м'які відтінки.</p>
-  <p class="dc-text">
-    Будемо вдячні, якщо ви підтримаєте стилістику свята — природні, м'які та пастельні відтінки. Одягайтеся так, щоб вам було зручно святкувати цілий день.
-  </p>
-  <p class="dc-nope">
-    <strong>Краще уникати:</strong> яскравих насичених кольорів і повністю чорного вбрання. Білий для гостей — без проблем 🤍
-  </p>
 </section>
 
 <section class="section section-gray" id="logistics">
