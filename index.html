@@ -781,7 +781,9 @@
       background: rgba(26, 26, 26, 0.88);
       transform: translateX(-50%) translateY(-2px);
     }
-    body.has-scroll-top .sticky-cta.visible { bottom: 5rem; }
+    @media (min-width: 901px) {
+      body.has-scroll-top .sticky-cta.visible { bottom: 5rem; }
+    }
 
     .field.is-invalid input:not([type="radio"]),
     .field.is-invalid select,
@@ -832,6 +834,42 @@
       .tl-content { grid-template-columns: 1fr; }
       .tl-photo { width: 100%; max-width: 280px; height: auto; aspect-ratio: 1; object-fit: cover; }
       .brush-palette { grid-template-columns: repeat(4, clamp(56px, 18vw, 72px)); }
+      .sticky-bar {
+        position: fixed;
+        bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+        left: 1rem;
+        right: 1rem;
+        z-index: 92;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        pointer-events: none;
+      }
+      .sticky-bar > .scroll-top,
+      .sticky-bar > .sticky-cta {
+        position: static;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        transform: none;
+        pointer-events: auto;
+      }
+      .sticky-bar > .scroll-top:not(.visible),
+      .sticky-bar > .sticky-cta:not(.visible) {
+        display: none;
+      }
+      .sticky-bar > .scroll-top {
+        align-self: flex-end;
+      }
+      .sticky-bar > .sticky-cta {
+        width: 100%;
+        text-align: center;
+        white-space: normal;
+        padding: 1.1rem 1.5rem;
+        font-size: 0.68rem;
+      }
+      .sticky-bar > .sticky-cta:hover { transform: translateY(-2px); }
     }
     @media (max-width: 520px) {
       .cd-item:not(:last-child)::after { display: none; }
@@ -839,24 +877,6 @@
       .hero { padding: 6rem 1.25rem 2rem; }
       .section { padding: 4rem 1.25rem; }
       .photo-cards { grid-template-columns: 1fr; }
-      .sticky-cta {
-        left: 1rem; right: 1rem; transform: none; text-align: center;
-        white-space: normal; padding: 1.1rem 1.5rem; font-size: 0.68rem;
-      }
-      .sticky-cta.visible {
-        bottom: max(1rem, env(safe-area-inset-bottom, 0px));
-      }
-      body.has-scroll-top .sticky-cta.visible {
-        bottom: max(1rem, env(safe-area-inset-bottom, 0px));
-      }
-      .sticky-cta:hover { transform: translateY(-2px); }
-      .scroll-top.visible {
-        right: 1rem;
-        bottom: max(1rem, env(safe-area-inset-bottom, 0px));
-      }
-      body.has-sticky-cta .scroll-top.visible {
-        bottom: calc(max(1rem, env(safe-area-inset-bottom, 0px)) + 4.75rem);
-      }
     }
   </style>
 </head>
@@ -1285,9 +1305,10 @@
   <p class="footer-copy">Сергій &amp; Вікторія · 12.09.2026</p>
 </footer>
 
-<a class="sticky-cta" id="stickyCta" href="#rsvp">Підтвердити участь</a>
-
-<button class="scroll-top" id="scrollTop" aria-label="Вгору" type="button">↑</button>
+<div class="sticky-bar" id="stickyBar">
+  <button class="scroll-top" id="scrollTop" aria-label="Вгору" type="button">↑</button>
+  <a class="sticky-cta" id="stickyCta" href="#rsvp">Підтвердити участь</a>
+</div>
 
 <script>
   // ▼ URL і токен мають збігатися з Apps Script (див. scripts/rsvp-backend.gs)
@@ -1391,7 +1412,6 @@
     const nearRsvp = rsvpRect.top < window.innerHeight * 0.6 && rsvpRect.bottom > 0;
     const showCta = y > 500 && !nearRsvp && !document.getElementById('rsvpForm').classList.contains('is-closed');
     stickyCta.classList.toggle('visible', showCta);
-    document.body.classList.toggle('has-sticky-cta', showCta);
   }
 
   window.addEventListener('scroll', updateScrollUi, { passive: true });
