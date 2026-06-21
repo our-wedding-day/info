@@ -9,6 +9,7 @@
 const INITIAL_RSVP_TOKEN = 'rsvp_S9xK2mP7vQ4nL8wR3jF6';
 const SHEET_RESPONSES = 'Відповіді';
 const SHEET_TASKS = 'Задачі';
+const SHEET_SUMMARY = 'Підсумок';
 
 const MAX_NAME_LENGTH = 200;
 const MAX_EMAIL_LENGTH = 254;
@@ -91,11 +92,17 @@ function doPost(e) {
       return data[key] || '';
     }));
 
-    ss.getSheetByName(SHEET_RESPONSES).appendRow(row);
-    sendNotification(data);
-    createTasks(data);
+    var saveAction = upsertResponse(ss, row);
+    sendNotification(data, saveAction === 'updated');
+    if (saveAction === 'created') {
+      createTasks(data);
+    } else {
+      appendTaskUpdateNote(ss, data.name);
+    }
+    sendGuestConfirmation(data, saveAction);
+    refreshSummary(ss);
 
-    return jsonResponse({ ok: true });
+    return jsonResponse({ ok: true, action: saveAction });
   } catch (err) {
     Logger.log(err);
     return jsonResponse({ ok: false, error: 'server_error' });
@@ -224,16 +231,127 @@ function ensureSheets(ss) {
     var t = ss.insertSheet(SHEET_TASKS);
     t.appendRow(['Час', 'Гість', 'Задача', 'Деталі', 'Статус']);
   }
+  if (!ss.getSheetByName(SHEET_SUMMARY)) {
+    ss.insertSheet(SHEET_SUMMARY);
+  }
 }
 
-function sendNotification(data) {
+function upsertResponse(ss, row) {
+  var sheet = ss.getSheetByName(SHEET_RESPONSES);
+  var values = sheet.getDataRange().getValues();
+  var email = String(row[2] || '').toLowerCase();
+  var existingRow = -1;
+
+  for (var i = values.length - 1; i >= 1; i--) {
+    if (String(values[i][2] || '').toLowerCase() === email) {
+      existingRow = i + 1;
+      break;
+    }
+  }
+
+  if (existingRow > 0) {
+    row[0] = new Date();
+    sheet.getRange(existingRow, 1, existingRow, row.length).setValues([row]);
+    return 'updated';
+  }
+
+  sheet.appendRow(row);
+  return 'created';
+}
+
+function appendTaskUpdateNote(ss, name) {
+  var sheet = ss.getSheetByName(SHEET_TASKS);
+  if (!sheet) return;
+  sheet.appendRow([
+    new Date(),
+    sanitizeCell(name || 'Гість'),
+    sanitizeCell('Оновлено RSVP'),
+    sanitizeCell('Гість змінив відповідь у формі'),
+    'Оновлено'
+  ]);
+}
+
+function sendGuestConfirmation(data, action) {
+  if (!data.email) return;
+
+  var subject = action === 'updated'
+    ? 'Вашу відповідь оновлено — Сергій & Вікторія'
+    : 'Дякуємо за відповідь — Сергій & Вікторія';
+
+  var lines = [
+    'Вітаємо, ' + (data.name || '') + '!',
+    '',
+    action === 'updated'
+      ? 'Ми оновили вашу відповідь на запрошення.'
+      : 'Ми отримали вашу відповідь на запрошення.',
+    '',
+    'Участь: ' + (data.attend || '—'),
+  ];
+
+  if (data.attend !== 'На жаль, ні') {
+    lines.push('Гостей: ' + (data.guests || '1'));
+  }
+
+  lines.push(
+    '',
+    'Якщо щось зміниться — напишіть організатору Яні: Telegram @dayX_yana або +38 066 779 50 08.',
+    '',
+    'До зустрічі!',
+    'Сергій & Вікторія'
+  );
+
+  try {
+    MailApp.sendEmail(data.email, subject, lines.join('\n'));
+  } catch (err) {
+    Logger.log('Guest confirmation failed: ' + err);
+  }
+}
+
+function refreshSummary(ss) {
+  ensureSheets(ss);
+  var sheet = ss.getSheetByName(SHEET_SUMMARY);
+  var responses = ss.getSheetByName(SHEET_RESPONSES).getDataRange().getValues();
+  var stats = {
+    total: 0,
+    yes: 0,
+    maybe: 0,
+    no: 0,
+    guests: 0,
+    childrenNotes: 0
+  };
+
+  for (var i = 1; i < responses.length; i++) {
+    var row = responses[i];
+    var attend = String(row[3] || '');
+    var guests = String(row[4] || '1');
+    stats.total++;
+    if (attend === 'Так, буду') stats.yes++;
+    else if (attend === 'Під питанням') stats.maybe++;
+    else if (attend === 'На жаль, ні') stats.no++;
+    if (guests === '5+') stats.guests += 5;
+    else stats.guests += parseInt(guests, 10) || 1;
+    if (row[21]) stats.childrenNotes++;
+  }
+
+  sheet.clear();
+  sheet.appendRow(['Показник', 'Значення']);
+  sheet.appendRow(['Всього відповідей', stats.total]);
+  sheet.appendRow(['Так, будуть', stats.yes]);
+  sheet.appendRow(['Під питанням', stats.maybe]);
+  sheet.appendRow(['На жаль, ні', stats.no]);
+  sheet.appendRow(['Орієнтовно гостей (max)', stats.guests]);
+  sheet.appendRow(['Відповідей з дітьми', stats.childrenNotes]);
+  sheet.appendRow(['Оновлено', new Date()]);
+}
+
+function sendNotification(data, isUpdate) {
   var notifyEmail = getNotifyEmail();
   if (!notifyEmail) {
     Logger.log('NOTIFY_EMAIL не налаштовано. Запустіть setupRsvpSecrets.');
     return;
   }
 
-  var subject = 'Нова відповідь на весілля: ' + sanitizeEmailSubjectPart(data.name);
+  var subject = (isUpdate ? 'Оновлена відповідь' : 'Нова відповідь') + ' на весілля: ' + sanitizeEmailSubjectPart(data.name);
   var body = HEADERS.slice(1).map(function(h, i) {
     return h + ': ' + (data[DATA_KEYS[i]] || '—');
   }).join('\n');

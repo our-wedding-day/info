@@ -8,8 +8,16 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Сергій & Вікторія — 12.09.26" />
   <meta property="og:description" content="Запрошення на весілля · 12 вересня 2026 · Івано-Франківськ" />
-  <meta property="og:image" content="assets/images/hero-ceremony.png" />
+  <meta property="og:url" content="https://our-wedding-day.github.io/info/" />
+  <meta property="og:image" content="https://our-wedding-day.github.io/info/assets/images/hero-ceremony.png" />
   <meta property="og:locale" content="uk_UA" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Сергій & Вікторія — 12.09.26" />
+  <meta name="twitter:description" content="Запрошення на весілля · 12 вересня 2026 · Івано-Франківськ" />
+  <meta name="twitter:image" content="https://our-wedding-day.github.io/info/assets/images/hero-ceremony.png" />
+  <link rel="canonical" href="https://our-wedding-day.github.io/info/" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="assets/images/hero-ceremony.png" as="image" />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Ms+Madi&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -383,7 +391,10 @@
       display: block; border-radius: var(--radius); flex-shrink: 0;
       filter: var(--photo-filter);
     }
-    .tl-actions { margin-top: 0.65rem; }
+    .tl-actions {
+      margin-top: 0.65rem;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem;
+    }
     .text-link {
       font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
       text-decoration: none; border-bottom: 1px solid currentColor;
@@ -498,6 +509,7 @@
     .field-hint { font-size: 0.78rem; color: var(--gray-600); margin-top: 0.35rem; }
     #rsvpAttendingFields { display: block; }
     #rsvpAttendingFields.is-hidden { display: none; }
+    #rsvpFoodFields.is-hidden { display: none; }
     #rsvpDeclineHint {
       display: none; font-size: 0.88rem; color: var(--gray-600);
       line-height: 1.75; margin-bottom: 1rem; padding: 1rem;
@@ -533,6 +545,39 @@
       font-size: 0.72rem; color: var(--gray-600); line-height: 1.65;
       margin: 0.5rem 0 1rem;
     }
+    body.nav-lock { overflow: hidden; }
+    .program-route-note {
+      text-align: center; font-size: 0.88rem; color: var(--gray-600);
+      margin: -2rem 0 2.5rem; line-height: 1.7; max-width: 520px;
+      margin-left: auto; margin-right: auto;
+    }
+    .tl-cal-btn {
+      background: none; border: none; padding: 0; cursor: pointer;
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; border-bottom: 1px solid currentColor;
+      color: inherit; font-family: inherit;
+    }
+    .tl-cal-btn:hover { opacity: 0.5; }
+    .rsvp-closed {
+      display: none; text-align: center; padding: 2rem 0 0;
+      font-size: 0.95rem; color: var(--gray-600); line-height: 1.75;
+    }
+    .rsvp-closed.is-visible { display: block; }
+    .rsvp-form.is-closed { display: none; }
+    .rsvp-progress {
+      text-align: center; font-size: 0.62rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gray-400); margin-bottom: 1.5rem;
+    }
+    .rsvp-step[hidden] { display: none !important; }
+    .rsvp-step-actions { display: flex; gap: 0.75rem; margin-top: 0.25rem; }
+    .rsvp-step-actions .submit-btn { margin-top: 0; flex: 1; }
+    .rsvp-btn-secondary {
+      flex: 1; padding: 1rem; background: transparent; border: 1px solid var(--black);
+      color: var(--black); font-family: var(--font-sans);
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.25s;
+    }
+    .rsvp-btn-secondary:hover { background: var(--gray-100); }
 
     /* Date picker */
     .date-picker { position: relative; }
@@ -776,6 +821,7 @@
 <section class="section section-light" id="program">
   <h2 class="section-title">Програма<br><em>святкування</em></h2>
   <p class="section-sub">Будемо вдячні, якщо ви прибудете на 10–15 хвилин раніше кожної події.</p>
+  <p class="program-route-note">Від собору до Nadiya Palace — близько 1,1 км пішки (~15 хвилин центром).</p>
   <div class="timeline">
 
     <div class="tl-day-header">П'ятниця · 11 вересня 2026</div>
@@ -802,7 +848,10 @@
           <p class="tl-place"><a href="https://maps.google.com/?q=%D0%A1%D0%B2%D1%8F%D1%82%D0%BE-%D0%A2%D1%80%D0%BE%D1%97%D1%86%D1%8C%D0%BA%D0%B8%D0%B9+%D1%81%D0%BE%D0%B1%D0%BE%D1%80+%D0%93%D1%80%D1%8E%D0%BD%D0%B2%D0%B0%D0%BB%D1%8C%D0%B4%D1%81%D1%8C%D0%BA%D0%B0+1+%D0%86%D0%B2%D0%B0%D0%BD%D0%BE-%D0%A4%D1%80%D0%B0%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA" target="_blank" rel="noopener">Свято-Троїцький кафедральний собор ПЦУ</a></p>
           <p class="tl-addr">вул. Грюнвальдська, 1 · Івано-Франківськ</p>
           <p class="tl-note">Бути на вінчанні не обов'язково — розпис і банкет для нас головне</p>
-          <p class="tl-actions"><a class="text-link" href="https://maps.google.com/?q=Свято-Троїцький+собор+Грюнвальдська+1+Івано-Франківськ" target="_blank" rel="noopener">Маршрут на мапі →</a></p>
+          <p class="tl-actions">
+            <a class="text-link" href="https://maps.google.com/?q=Свято-Троїцький+собор+Грюнвальдська+1+Івано-Франківськ" target="_blank" rel="noopener">Маршрут на мапі →</a>
+            <button type="button" class="tl-cal-btn" data-cal="church">Додати в календар</button>
+          </p>
         </div>
         <img class="tl-photo" src="assets/images/church.png" alt="Свято-Троїцький собор" loading="lazy" onerror="this.classList.add('is-hidden');this.closest('.tl-content').classList.add('tl-content--no-photo')" />
       </div>
@@ -816,7 +865,10 @@
           <p class="tl-desc">О 12:30 на вежі буде welcome drink і фуршет перед початком церемонії</p>
           <p class="tl-place"><a href="https://maps.google.com/?q=Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">Nadiya Palace</a></p>
           <p class="tl-addr">вул. Січових Стрільців, 12 · Івано-Франківськ</p>
-          <p class="tl-actions"><a class="text-link" href="https://maps.google.com/?q=Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">Маршрут на мапі →</a></p>
+          <p class="tl-actions">
+            <a class="text-link" href="https://maps.google.com/?q=Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">Маршрут на мапі →</a>
+            <button type="button" class="tl-cal-btn" data-cal="registry">Додати в календар</button>
+          </p>
         </div>
         <img class="tl-photo" src="assets/images/tower-vysche-lyubov.png" alt="Nadiya Palace" loading="lazy" onerror="this.classList.add('is-hidden');this.closest('.tl-content').classList.add('tl-content--no-photo')" />
       </div>
@@ -830,7 +882,10 @@
           <p class="tl-desc">Банкетна зала «Дзеркальна»</p>
           <p class="tl-place"><a href="https://maps.google.com/?q=OMNIVORE+Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">OMNIVORE · Nadiya Palace</a></p>
           <p class="tl-addr">вул. Січових Стрільців, 12 · Івано-Франківськ</p>
-          <p class="tl-actions"><a class="text-link" href="https://maps.google.com/?q=OMNIVORE+Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">Маршрут на мапі →</a></p>
+          <p class="tl-actions">
+            <a class="text-link" href="https://maps.google.com/?q=OMNIVORE+Nadiya+Palace+Ivano-Frankivsk" target="_blank" rel="noopener">Маршрут на мапі →</a>
+            <button type="button" class="tl-cal-btn" data-cal="banquet">Додати в календар</button>
+          </p>
         </div>
         <img class="tl-photo" src="assets/images/omnivore-hall.png" alt="Ресторан OMNIVORE" loading="lazy" onerror="this.classList.add('is-hidden');this.closest('.tl-content').classList.add('tl-content--no-photo')" />
       </div>
@@ -1000,11 +1055,19 @@
     <h2 class="section-title">Підтвердіть<br><em>участь</em></h2>
     <p class="section-sub" style="margin-bottom:2rem">Будь ласка, заповніть форму до <strong>12 серпня 2026</strong></p>
 
+    <div class="rsvp-closed" id="rsvpClosed">
+      <p>Дедлайн RSVP минув. Якщо ще не встигли — напишіть Яні: <a href="https://t.me/dayX_yana" target="_blank" rel="noopener">@dayX_yana</a> або <a href="tel:+380667795008">+38 066 779 50 08</a>.</p>
+    </div>
+
     <form class="rsvp-form" id="rsvpForm">
       <div class="field hp-field" aria-hidden="true">
         <label for="website">Website</label>
         <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
       </div>
+
+      <p class="rsvp-progress" id="rsvpProgress" aria-live="polite">Крок 1 з 3</p>
+
+      <div class="rsvp-step" data-step="1">
       <div class="field">
         <label for="name">Ім'я та прізвище *</label>
         <input type="text" id="name" name="name" placeholder="Іван Петренко" maxlength="200" required />
@@ -1022,7 +1085,10 @@
           <label class="radio-option"><input type="radio" name="attend" value="На жаль, ні" /><span>На жаль, ні</span></label>
         </div>
       </div>
-      <p id="rsvpDeclineHint">Шкода, що не зможете бути. Залиште контакт — і за бажанням короткий коментар нижче.</p>
+      <p id="rsvpDeclineHint">Шкода, що не зможете бути. Залиште контакт — і за бажанням короткий коментар на наступному кроці.</p>
+      </div>
+
+      <div class="rsvp-step" data-step="2" hidden>
       <div id="rsvpAttendingFields">
       <div class="field">
         <label for="guests">Кількість гостей (включно з вами)</label>
@@ -1136,6 +1202,11 @@
           <label class="radio-option"><input type="radio" name="sunday" value="Можливо" /><span>Можливо</span></label>
         </div>
       </div>
+      </div>
+      </div>
+
+      <div class="rsvp-step" data-step="3" hidden>
+      <div id="rsvpFoodFields">
       <div class="field">
         <label for="allergies">Алергії</label>
         <input type="text" id="allergies" name="allergies" maxlength="500" placeholder="Напр.: алергія на горіхи, лактоза..." />
@@ -1155,7 +1226,13 @@
         <textarea id="comment" name="comment" maxlength="2000" placeholder="Усе, що важливо нам знати..."></textarea>
       </div>
       <p class="privacy-note">Надсилаючи форму, ви погоджуєтесь, що ваші дані (ім'я, email та відповіді) використовуються лише для організації весілля і зберігаються до вересня 2026 року. Ми не передаємо їх третім особам і не використовуємо для розсилок.</p>
-      <button type="submit" class="submit-btn" id="submitBtn">Надіслати відповідь</button>
+      </div>
+
+      <div class="rsvp-step-actions">
+        <button type="button" class="rsvp-btn-secondary" id="rsvpPrev" hidden>Назад</button>
+        <button type="button" class="submit-btn" id="rsvpNext">Далі</button>
+        <button type="submit" class="submit-btn" id="submitBtn" hidden>Надіслати відповідь</button>
+      </div>
     </form>
 
     <div class="form-loading" id="formLoading" aria-hidden="true">
@@ -1191,6 +1268,70 @@
   // ▼ URL і токен мають збігатися з Apps Script (див. scripts/rsvp-backend.gs)
   const RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyqgAaXDbIVj0TGnx7iEhjtK1Sr5gXyRN4l0d7HB27tKRbMRFDUzR1N5rWQnMeqeVc_FQ/exec';
   const RSVP_TOKEN = 'rsvp_S9xK2mP7vQ4nL8wR3jF6';
+  const RSVP_DEADLINE = new Date(2026, 7, 12, 23, 59, 59);
+
+  const CALENDAR_EVENTS = {
+    church: {
+      title: 'Вінчання — Сергій & Вікторія',
+      start: '20260912T104500',
+      end: '20260912T120000',
+      location: 'Свято-Троїцький кафедральний собор ПЦУ, вул. Грюнвальдська 1, Івано-Франківськ',
+      description: 'Збір гостей о 10:45. Бути на вінчанні не обов\'язково.'
+    },
+    registry: {
+      title: 'Церемонія розпису — Сергій & Вікторія',
+      start: '20260912T123000',
+      end: '20260912T133000',
+      location: 'Nadiya Palace, вул. Січових Стрільців 12, Івано-Франківськ',
+      description: 'Welcome drink і фуршет на вежі о 12:30.'
+    },
+    banquet: {
+      title: 'Святковий банкет — Сергій & Вікторія',
+      start: '20260912T140000',
+      end: '20260912T230000',
+      location: 'OMNIVORE · Nadiya Palace, вул. Січових Стрільців 12, Івано-Франківськ',
+      description: 'Банкетна зала «Дзеркальна».'
+    }
+  };
+
+  function escapeIcs(text) {
+    return String(text).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+  }
+
+  function formatIcsStamp(d) {
+    return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  }
+
+  function downloadCalendarEvent(key) {
+    const ev = CALENDAR_EVENTS[key];
+    if (!ev) return;
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Our Wedding//UA',
+      'CALSCALE:GREGORIAN',
+      'BEGIN:VEVENT',
+      'UID:' + key + '-wedding-2026@our-wedding-day',
+      'DTSTAMP:' + formatIcsStamp(new Date()),
+      'DTSTART;TZID=Europe/Kyiv:' + ev.start,
+      'DTEND;TZID=Europe/Kyiv:' + ev.end,
+      'SUMMARY:' + escapeIcs(ev.title),
+      'LOCATION:' + escapeIcs(ev.location),
+      'DESCRIPTION:' + escapeIcs(ev.description),
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = key + '-wedding.ics';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  document.querySelectorAll('.tl-cal-btn[data-cal]').forEach(btn => {
+    btn.addEventListener('click', () => downloadCalendarEvent(btn.dataset.cal));
+  });
 
   const header = document.getElementById('siteHeader');
   const navToggle = document.getElementById('navToggle');
@@ -1200,7 +1341,14 @@
   function setNavOpen(open) {
     header.classList.toggle('nav-open', open);
     navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.classList.toggle('nav-lock', open);
   }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && header.classList.contains('nav-open')) {
+      setNavOpen(false);
+    }
+  });
 
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 60);
@@ -1472,7 +1620,79 @@
   document.querySelectorAll('input[name="nonAlcohol"]').forEach(r => r.addEventListener('change', syncNonAlcoholDetailsField));
 
   const rsvpAttendingFields = document.getElementById('rsvpAttendingFields');
+  const rsvpFoodFields = document.getElementById('rsvpFoodFields');
   const rsvpDeclineHint = document.getElementById('rsvpDeclineHint');
+  const rsvpSteps = document.querySelectorAll('.rsvp-step');
+  const rsvpProgress = document.getElementById('rsvpProgress');
+  const rsvpPrev = document.getElementById('rsvpPrev');
+  const rsvpNext = document.getElementById('rsvpNext');
+  const submitBtn = document.getElementById('submitBtn');
+  let rsvpStep = 1;
+
+  function isDeclineAttend() {
+    const attend = document.querySelector('input[name="attend"]:checked');
+    return attend && attend.value === 'На жаль, ні';
+  }
+
+  function updateRsvpProgressLabel() {
+    if (isDeclineAttend()) {
+      rsvpProgress.textContent = rsvpStep === 1 ? 'Крок 1 з 2' : 'Крок 2 з 2';
+    } else {
+      rsvpProgress.textContent = `Крок ${rsvpStep} з 3`;
+    }
+  }
+
+  function showRsvpStep(n) {
+    rsvpStep = n;
+    rsvpSteps.forEach(s => {
+      s.hidden = Number(s.dataset.step) !== n;
+    });
+    updateRsvpProgressLabel();
+    rsvpPrev.hidden = n === 1;
+    rsvpNext.hidden = n === 3;
+    submitBtn.hidden = n !== 3;
+    document.getElementById('rsvpForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function validateRsvpStep(n) {
+    if (n !== 1) return true;
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const attend = document.querySelector('input[name="attend"]:checked');
+    if (!name.value.trim()) {
+      name.reportValidity();
+      return false;
+    }
+    if (!email.value.trim() || !email.checkValidity()) {
+      email.reportValidity();
+      return false;
+    }
+    if (!attend) {
+      document.querySelector('input[name="attend"]').closest('.field').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+    return true;
+  }
+
+  rsvpNext.addEventListener('click', () => {
+    if (!validateRsvpStep(rsvpStep)) return;
+    if (rsvpStep === 1 && isDeclineAttend()) showRsvpStep(3);
+    else showRsvpStep(rsvpStep + 1);
+  });
+
+  rsvpPrev.addEventListener('click', () => {
+    if (rsvpStep === 3 && isDeclineAttend()) showRsvpStep(1);
+    else showRsvpStep(rsvpStep - 1);
+  });
+
+  function applyRsvpDeadline() {
+    if (new Date() <= RSVP_DEADLINE) return;
+    document.getElementById('rsvpClosed').classList.add('is-visible');
+    document.getElementById('rsvpForm').classList.add('is-closed');
+    rsvpProgress.hidden = true;
+  }
+
+  applyRsvpDeadline();
 
   function clearAttendingFieldValues() {
     rsvpAttendingFields.querySelectorAll('input:not([type="radio"]), select, textarea').forEach(el => {
@@ -1500,45 +1720,50 @@
     const attend = document.querySelector('input[name="attend"]:checked');
     const isDecline = attend && attend.value === 'На жаль, ні';
     rsvpAttendingFields.classList.toggle('is-hidden', isDecline);
+    if (rsvpFoodFields) rsvpFoodFields.classList.toggle('is-hidden', isDecline);
     rsvpDeclineHint.classList.toggle('is-visible', isDecline);
     if (isDecline) clearAttendingFieldValues();
+    updateRsvpProgressLabel();
   }
 
   document.querySelectorAll('input[name="attend"]').forEach(r => r.addEventListener('change', syncAttendFields));
+  syncAttendFields();
 
   const RSVP_EDIT_NOTE = ' Якщо щось зміниться — напишіть Яні в Telegram @dayX_yana або зателефонуйте +38 066 779 50 08.';
 
-  function getSuccessMessage(data) {
+  function getSuccessMessage(data, action) {
+    const updated = action === 'updated';
+    const updateNote = updated ? ' Оновили вашу відповідь у нашій таблиці.' : '';
     if (data.attend === 'На жаль, ні') {
       return {
-        title: 'Дякуємо, що відповіли',
-        text: 'Шкода, що не зможете бути — але ми дуже цінуємо, що попередили. Сподіваємось побачитися скоро!' + RSVP_EDIT_NOTE
+        title: updated ? 'Оновлено' : 'Дякуємо, що відповіли',
+        text: (updated ? 'Зафіксували зміни.' : 'Шкода, що не зможете бути — але ми дуже цінуємо, що попередили. Сподіваємось побачитися скоро!') + updateNote + RSVP_EDIT_NOTE
       };
     }
     if (data.attend === 'Під питанням') {
       return {
-        title: 'Дякуємо!',
-        text: 'Зафіксували вашу відповідь. Якщо стане зрозуміло — напишіть нам або Яні. Будемо чекати на good news!' + RSVP_EDIT_NOTE
+        title: updated ? 'Оновлено!' : 'Дякуємо!',
+        text: (updated ? 'Зафіксували зміни у вашій відповіді.' : 'Зафіксували вашу відповідь. Якщо стане зрозуміло — напишіть нам або Яні. Будемо чекати на good news!') + updateNote + RSVP_EDIT_NOTE
       };
     }
     const uncertain = [data.welcome, data.sunday, data.hotel].includes('Можливо') || data.hotel === 'Ще думаю';
     if (uncertain) {
       return {
-        title: 'Дякуємо!',
-        text: 'Отримали вашу відповідь. Якщо щось зміниться — просто дайте знати. Дуже чекаємо на зустріч!' + RSVP_EDIT_NOTE
+        title: updated ? 'Оновлено!' : 'Дякуємо!',
+        text: (updated ? 'Зафіксували зміни.' : 'Отримали вашу відповідь.') + ' Якщо щось зміниться — просто дайте знати. Дуже чекаємо на зустріч!' + updateNote + RSVP_EDIT_NOTE
       };
     }
     return {
-      title: 'До зустрічі!',
-      text: 'Вашу відповідь отримано — дуже чекаємо на вас 12 вересня в Івано-Франківську.' + RSVP_EDIT_NOTE
+      title: updated ? 'Оновлено!' : 'До зустрічі!',
+      text: (updated ? 'Оновили вашу відповідь.' : 'Вашу відповідь отримано') + ' — дуже чекаємо на вас 12 вересня в Івано-Франківську.' + RSVP_EDIT_NOTE
     };
   }
 
-  function showFormSuccess(data) {
+  function showFormSuccess(data, action) {
     const form = document.getElementById('rsvpForm');
     const loading = document.getElementById('formLoading');
     const success = document.getElementById('formSuccess');
-    const msg = getSuccessMessage(data);
+    const msg = getSuccessMessage(data, action);
 
     form.style.display = 'none';
     loading.classList.remove('is-visible');
@@ -1552,6 +1777,10 @@
 
   document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
     e.preventDefault();
+    if (rsvpStep !== 3) {
+      rsvpNext.click();
+      return;
+    }
     const btn = document.getElementById('submitBtn');
     const errEl = document.getElementById('formError');
     const loading = document.getElementById('formLoading');
@@ -1580,7 +1809,7 @@
       if (!result.ok) {
         throw new Error(result.error || 'server_error');
       }
-      showFormSuccess(data);
+      showFormSuccess(data, result.action);
     } catch (err) {
       loading.classList.remove('is-visible');
       loading.setAttribute('aria-hidden', 'true');
