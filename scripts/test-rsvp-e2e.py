@@ -16,14 +16,11 @@ def fill_attending_flow(page, contact, comment):
     page.wait_for_timeout(400)
 
     page.select_option("#guests", "2")
-    page.check('input[name="transfer"][value="Так"]')
-    page.wait_for_selector("#transferDetailsField.is-visible")
-    page.fill("#transferDetails", "З вокзалу до готелю (автотест)")
-    page.check('input[name="hotel"][value="Так, потрібен номер"]')
-    page.wait_for_selector("#hotelDatesField.is-visible")
     page.check('input[name="welcome"][value="Так"]')
     page.check('input[name="church"][value="Так"]')
     page.check('input[name="sunday"][value="Ні"]')
+    page.fill("#travelNotes", "Трансфер з вокзалу до готелю (автотест)")
+    page.fill("#foodNotes", "Без горіхів (автотест)")
     page.wait_for_timeout(400)
 
     page.fill("#comment", comment)
