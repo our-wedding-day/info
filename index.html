@@ -572,8 +572,8 @@
     .rsvp-closed.is-visible { display: block; }
     .rsvp-form.is-closed { display: none; }
     .rsvp-progress {
-      text-align: center; font-size: 0.62rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--gray-400); margin-bottom: 1.5rem;
+      text-align: center; font-size: 0.78rem; letter-spacing: 0.02em;
+      color: var(--gray-400); margin-bottom: 1.5rem;
     }
     .rsvp-step[hidden] { display: none !important; }
     .rsvp-step-actions { display: flex; gap: 0.75rem; margin-top: 0.25rem; }
@@ -1148,7 +1148,7 @@
         <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
       </div>
 
-      <p class="rsvp-progress" id="rsvpProgress" aria-live="polite">Крок 1 з 2</p>
+      <p class="rsvp-progress" id="rsvpProgress" aria-live="polite">Крок 1 із 2</p>
 
       <div class="rsvp-step" data-step="1">
       <div class="field" id="nameField">
@@ -1223,12 +1223,12 @@
       <div class="field">
         <label for="travelNotes">Логістика та житло</label>
         <textarea id="travelNotes" name="travelNotes" maxlength="2000" placeholder="Напр.: трансфер з вокзалу, номер у Nadiya Palace 11–13 вересня (−50%), допомога з квартирою..."></textarea>
-        <p class="field-hint">Трансфер, проживання в Nadiya Palace (дати заїзду/виїзду), пошук іншого житла — опишіть, що актуально, або залиште порожнім</p>
+        <p class="field-hint">Трансфер, Nadiya Palace, інше житло — за бажанням</p>
       </div>
       <div class="field">
         <label for="foodNotes">Харчування та інше</label>
         <textarea id="foodNotes" name="foodNotes" maxlength="2000" placeholder="Напр.: алергія на горіхи, вегетаріанство, безалкогольні напої, двоє дітей 5 і 8 років, зачіска..."></textarea>
-        <p class="field-hint">Алергії, особливості харчування, безалкогольні напої, діти, зачіска/макіяж — або залиште порожнім</p>
+        <p class="field-hint">Алергії, діти, зачіска/макіяж — за бажанням</p>
       </div>
       </div>
       <div class="field">
@@ -1720,7 +1720,7 @@
   }
 
   function updateRsvpProgressLabel() {
-    rsvpProgress.textContent = `Крок ${rsvpStep} з 2`;
+    rsvpProgress.textContent = `Крок ${rsvpStep} із 2`;
   }
 
   function showRsvpStep(n) {
@@ -1732,6 +1732,12 @@
     rsvpPrev.hidden = n === 1;
     rsvpNext.hidden = n === 2;
     submitBtn.hidden = n !== 2;
+    if (n === 2) {
+      const target = isDeclineAttend()
+        ? document.getElementById('comment')
+        : document.getElementById('guests');
+      requestAnimationFrame(() => target?.focus());
+    }
   }
 
   function validateRsvpStep(n) {
