@@ -66,7 +66,7 @@ function doPost(e) {
     var raw = JSON.parse(e.postData.contents);
 
     if (raw.website) {
-      return jsonResponse({ ok: true });
+      return jsonResponse({ ok: true, action: 'ignored' });
     }
 
     var expectedToken = PropertiesService.getScriptProperties().getProperty('RSVP_TOKEN');
@@ -236,22 +236,34 @@ function ensureSheets(ss) {
   }
 }
 
+function getEmailColumnIndex(headers) {
+  for (var c = 0; c < headers.length; c++) {
+    if (String(headers[c] || '').trim().toLowerCase() === 'email') {
+      return c;
+    }
+  }
+  return 2;
+}
+
 function upsertResponse(ss, row) {
   var sheet = ss.getSheetByName(SHEET_RESPONSES);
   var values = sheet.getDataRange().getValues();
-  var email = String(row[2] || '').toLowerCase();
+  var emailCol = values.length ? getEmailColumnIndex(values[0]) : 2;
+  var email = String(row[2] || '').trim().toLowerCase();
   var existingRow = -1;
 
-  for (var i = values.length - 1; i >= 1; i--) {
-    if (String(values[i][2] || '').toLowerCase() === email) {
-      existingRow = i + 1;
-      break;
+  if (email) {
+    for (var i = values.length - 1; i >= 1; i--) {
+      if (String(values[i][emailCol] || '').trim().toLowerCase() === email) {
+        existingRow = i + 1;
+        break;
+      }
     }
   }
 
   if (existingRow > 0) {
     row[0] = new Date();
-    sheet.getRange(existingRow, 1, existingRow, row.length).setValues([row]);
+    sheet.getRange(existingRow, 1, 1, row.length).setValues([row]);
     return 'updated';
   }
 
