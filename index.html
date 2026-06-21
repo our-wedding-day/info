@@ -318,14 +318,14 @@
       display: block; font-size: 0.72rem; letter-spacing: 0.12em;
       text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 0.45rem;
     }
-    .field input, .field select, .field textarea {
+    .field input:not([type="radio"]):not([type="checkbox"]), .field select, .field textarea {
       width: 100%; background: rgba(255,255,255,0.06);
       border: 1px solid var(--line-light); color: var(--cream);
       padding: 0.7rem 0.95rem; font-family: 'Jost', sans-serif;
       font-size: 0.88rem; outline: none; transition: border-color 0.2s;
       border-radius: 0; -webkit-appearance: none;
     }
-    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--gold); }
+    .field input:not([type="radio"]):not([type="checkbox"]):focus, .field select:focus, .field textarea:focus { border-color: var(--gold); }
     .field select option { background: var(--black); }
     .field textarea { resize: vertical; min-height: 70px; }
     .field-hint { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 0.35rem; }
@@ -333,8 +333,15 @@
     #hotelDatesField.is-visible { display: block; }
     .radio-group { display: flex; gap: 0.65rem; flex-wrap: wrap; }
     .radio-option { display: flex; align-items: center; gap: 0.45rem; cursor: pointer; }
-    .radio-option input { width: auto; accent-color: var(--gold); }
-    .radio-option span { font-size: 0.86rem; }
+    .radio-option input[type="radio"] {
+      width: 1.05rem; height: 1.05rem; flex-shrink: 0;
+      margin: 0; padding: 0; border: none; background: transparent;
+      accent-color: var(--gold); cursor: pointer;
+      -webkit-appearance: radio; appearance: auto;
+    }
+    .radio-option span { font-size: 0.86rem; color: var(--cream); }
+    #housingHelpDetailsField { display: none; }
+    #housingHelpDetailsField.is-visible { display: block; }
     .submit-btn {
       width: 100%; padding: 1rem; background: var(--gold); border: 2px solid var(--gold);
       color: var(--white); font-family: 'Jost', sans-serif;
@@ -752,7 +759,7 @@
       </div>
       <div class="field">
         <label for="arrival">Коли плануєте приїхати?</label>
-        <input type="text" id="arrival" name="arrival" placeholder="Напр.: 11 вересня ввечері" />
+        <input type="date" id="arrival" name="arrival" min="2026-09-10" max="2026-09-12" />
       </div>
       <div class="field">
         <label>Чи будете на вечері 11 вересня (welcome)?</label>
@@ -778,6 +785,7 @@
       </div>
       <div class="field">
         <label>Плануєте зупинитися в Nadiya Palace?</label>
+        <p class="field-hint" style="margin-bottom:0.5rem">Гостям весілля — знижка 50% на номери. При бронюванні повідомте, що їдете на весілля Сергія та Вікторії.</p>
         <div class="radio-group">
           <label class="radio-option"><input type="radio" name="hotel" value="Так, потрібен номер" /><span>Так, потрібен номер</span></label>
           <label class="radio-option"><input type="radio" name="hotel" value="Ні" /><span>Ні</span></label>
@@ -799,11 +807,15 @@
         <p class="field-hint">Заповніть, якщо потрібен номер — допоможе з бронюванням (−50% для гостей весілля)</p>
       </div>
       <div class="field">
-        <label>Потрібна допомога з пошуком житла?</label>
+        <label>Потрібна допомога з пошуком іншого житла?</label>
         <div class="radio-group">
           <label class="radio-option"><input type="radio" name="housingHelp" value="Так" /><span>Так</span></label>
           <label class="radio-option"><input type="radio" name="housingHelp" value="Ні" /><span>Ні</span></label>
         </div>
+      </div>
+      <div class="field" id="housingHelpDetailsField">
+        <label for="housingHelpDetails">Що саме шукаєте?</label>
+        <textarea id="housingHelpDetails" name="housingHelpDetails" placeholder="Напр.: квартира на 2 особи, з паркінгом, близько до центру..."></textarea>
       </div>
       <div class="field">
         <label>Потрібні безалкогольні напої?</label>
@@ -813,14 +825,14 @@
         </div>
       </div>
       <div class="field">
-        <label>Цікавить зачіска / макіяж у готелі вранці?</label>
+        <label>Чи потрібна допомога з записом на зачіску / макіяж?</label>
         <div class="radio-group">
           <label class="radio-option"><input type="radio" name="beauty" value="Так" /><span>Так</span></label>
           <label class="radio-option"><input type="radio" name="beauty" value="Ні" /><span>Ні</span></label>
         </div>
       </div>
       <div class="field">
-        <label>Чи цікавить after day у неділю 13 вересня?</label>
+        <label>Будете на after day (13 вересня)?</label>
         <div class="radio-group">
           <label class="radio-option"><input type="radio" name="sunday" value="Так" /><span>Так</span></label>
           <label class="radio-option"><input type="radio" name="sunday" value="Ні" /><span>Ні</span></label>
@@ -839,10 +851,6 @@
       <div class="field">
         <label for="children">Діти (кількість та вік)</label>
         <input type="text" id="children" name="children" placeholder="Напр.: двоє — 5 і 8 років" />
-      </div>
-      <div class="field">
-        <label for="wishes">Пісня на танець / побажання</label>
-        <input type="text" id="wishes" name="wishes" placeholder="Напр.: пісня для першого танцю..." />
       </div>
       <div class="field">
         <label for="comment">Інший коментар</label>
@@ -987,6 +995,18 @@
   hotelCheckIn.addEventListener('change', () => {
     if (hotelCheckIn.value) hotelCheckOut.min = hotelCheckIn.value;
   });
+
+  const housingHelpDetailsField = document.getElementById('housingHelpDetailsField');
+  const housingHelpDetails = document.getElementById('housingHelpDetails');
+
+  function syncHousingHelpDetailsField() {
+    const help = document.querySelector('input[name="housingHelp"]:checked');
+    const show = help && help.value === 'Так';
+    housingHelpDetailsField.classList.toggle('is-visible', show);
+    if (!show) housingHelpDetails.value = '';
+  }
+
+  document.querySelectorAll('input[name="housingHelp"]').forEach(r => r.addEventListener('change', syncHousingHelpDetailsField));
 
   document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
     e.preventDefault();
