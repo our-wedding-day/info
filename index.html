@@ -843,7 +843,20 @@
         left: 1rem; right: 1rem; transform: none; text-align: center;
         white-space: normal; padding: 1.1rem 1.5rem; font-size: 0.68rem;
       }
+      .sticky-cta.visible {
+        bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+      }
+      body.has-scroll-top .sticky-cta.visible {
+        bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+      }
       .sticky-cta:hover { transform: translateY(-2px); }
+      .scroll-top.visible {
+        right: 1rem;
+        bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+      }
+      body.has-sticky-cta .scroll-top.visible {
+        bottom: calc(max(1rem, env(safe-area-inset-bottom, 0px)) + 4.75rem);
+      }
     }
   </style>
 </head>
@@ -1378,6 +1391,7 @@
     const nearRsvp = rsvpRect.top < window.innerHeight * 0.6 && rsvpRect.bottom > 0;
     const showCta = y > 500 && !nearRsvp && !document.getElementById('rsvpForm').classList.contains('is-closed');
     stickyCta.classList.toggle('visible', showCta);
+    document.body.classList.toggle('has-sticky-cta', showCta);
   }
 
   window.addEventListener('scroll', updateScrollUi, { passive: true });
