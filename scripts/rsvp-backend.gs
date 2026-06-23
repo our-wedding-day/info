@@ -18,12 +18,12 @@ const RATE_LIMIT_MAX = 3;
 const RATE_LIMIT_SECONDS = 3600;
 
 const HEADERS = [
-  'Час', 'Ім\'я', 'Контакт', 'Участь', 'Гостей', 'Приїзд', 'Welcome 11.09',
-  'Вінчання', 'Неділя 13.09', 'Логістика та житло', 'Харчування та інше', 'Коментар'
+  'Час', 'Ім\'я', 'Контакт', 'Участь', 'Гостей', 'Приїзд', 'Від\'їзд', 'Welcome 11.09',
+  'Вінчання', 'Поправини 13.09', 'Логістика та житло', 'Харчування та інше', 'Коментар'
 ];
 
 const DATA_KEYS = [
-  'name', 'contact', 'attend', 'guests', 'arrival', 'welcome', 'church', 'sunday',
+  'name', 'contact', 'attend', 'guests', 'arrival', 'departure', 'welcome', 'church', 'sunday',
   'travelNotes', 'foodNotes', 'comment'
 ];
 
@@ -138,6 +138,11 @@ function validatePayload(raw) {
   var arrival = trimString(raw.arrival, 10);
   if (arrival && !isValidIsoDate(arrival)) return { error: 'validation' };
   data.arrival = arrival;
+
+  var departure = trimString(raw.departure, 10);
+  if (departure && !isValidIsoDate(departure)) return { error: 'validation' };
+  if (departure && arrival && departure < arrival) return { error: 'validation' };
+  data.departure = departure;
 
   var longKey;
   for (longKey in LONG_FIELDS) {

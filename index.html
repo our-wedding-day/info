@@ -942,7 +942,7 @@
       <div class="tl-content tl-content--no-photo">
         <div class="tl-text">
           <h3>Неформальна зустріч</h3>
-          <p class="tl-desc">Спільна вечеря для гостей, які приїдуть заздалегідь. Деталі уточнимо ближче до дати.</p>
+          <p class="tl-desc">Є ідея зустрітися разом ввечері на каву з тими, хто приїде заздалегідь. Деталі уточнимо ближче до дати.</p>
           <p class="tl-note">Вкажіть у <a href="#rsvp">формі підтвердження</a>, чи плануєте бути</p>
         </div>
       </div>
@@ -1008,8 +1008,8 @@
       <div class="tl-bar"></div>
       <div class="tl-content tl-content--no-photo">
         <div class="tl-text">
-          <h3>Можливий день після святкування</h3>
-          <p class="tl-desc">Попередньо плануємо орендувати будинок з басейном і мангалом — просто ще один день відпочинку разом. План поки попередній, деталі повідомимо пізніше.</p>
+          <h3>Поправини</h3>
+          <p class="tl-desc">Попередньо плануємо орендувати будинок або будиночки — просто ще один день відпочинку разом. План поки попередній, деталі повідомимо пізніше.</p>
           <p class="tl-note">Вкажіть у <a href="#rsvp">формі підтвердження</a>, чи цікавить вам участь</p>
         </div>
       </div>
@@ -1220,11 +1220,19 @@
         <div class="date-picker" data-min="2026-09-01" data-max="2026-09-30">
           <input type="hidden" id="arrival" name="arrival" />
           <button type="button" class="date-picker-trigger is-placeholder" aria-haspopup="dialog">Оберіть дату</button>
-          <div class="date-picker-popup" hidden role="dialog" aria-label="Оберіть дату"></div>
+          <div class="date-picker-popup" hidden role="dialog" aria-label="Оберіть дату приїзду"></div>
+        </div>
+      </div>
+      <div class="field">
+        <label for="departure">Коли плануєте від'їхати?</label>
+        <div class="date-picker" id="departurePicker" data-min="2026-09-01" data-max="2026-09-30">
+          <input type="hidden" id="departure" name="departure" />
+          <button type="button" class="date-picker-trigger is-placeholder" aria-haspopup="dialog">Оберіть дату</button>
+          <div class="date-picker-popup" hidden role="dialog" aria-label="Оберіть дату від'їзду"></div>
         </div>
       </div>
       <div class="field" id="welcomeField">
-        <label>Чи будете на вечері 11 вересня? *</label>
+        <label>Чи плануєте бути на зустрічі ввечері 11 вересня? *</label>
         <div class="radio-group">
           <label class="radio-option"><input type="radio" name="welcome" value="Так" /><span>Так</span></label>
           <label class="radio-option"><input type="radio" name="welcome" value="Ні" /><span>Ні</span></label>
@@ -1241,13 +1249,13 @@
         <p class="field-error-msg">Оберіть один варіант</p>
       </div>
       <div class="field" id="sundayField">
-        <label>Чи цікавить вас день після святкування (13 вересня, якщо відбудеться)? *</label>
+        <label>Чи плануєте лишатися у неділю? *</label>
         <div class="radio-group">
           <label class="radio-option"><input type="radio" name="sunday" value="Так" /><span>Так</span></label>
           <label class="radio-option"><input type="radio" name="sunday" value="Ні" /><span>Ні</span></label>
           <label class="radio-option"><input type="radio" name="sunday" value="Можливо" /><span>Можливо</span></label>
         </div>
-        <p class="field-hint">План поки попередній — повідомимо, якщо все зійдеться</p>
+        <p class="field-hint">Попередньо плануємо поправини — оренда будинку або будиночків, ще один день разом. Повідомимо, якщо все зійдеться</p>
         <p class="field-error-msg">Оберіть один варіант</p>
       </div>
       <div class="field">
@@ -1726,6 +1734,42 @@
     return false;
   }
 
+  const WEDDING_DAY = '2026-09-12';
+  const POPRAVYNY_DAY = '2026-09-13';
+
+  function clearRadioGroup(name) {
+    document.querySelectorAll(`input[name="${name}"]`).forEach(r => { r.checked = false; });
+    clearFieldError(document.getElementById(name + 'Field'));
+  }
+
+  function syncDeparturePickerBounds() {
+    const arrival = document.getElementById('arrival').value;
+    const departurePicker = document.getElementById('departurePicker');
+    const departureInput = document.getElementById('departure');
+    departurePicker.dataset.min = arrival || '2026-09-01';
+    if (arrival && departureInput.value && departureInput.value < arrival) {
+      departureInput.value = '';
+      const trigger = departurePicker.querySelector('.date-picker-trigger');
+      trigger.textContent = 'Оберіть дату';
+      trigger.classList.add('is-placeholder');
+      trigger.setAttribute('aria-label', 'Оберіть дату');
+    }
+  }
+
+  function updateTravelDependentFields() {
+    const arrival = document.getElementById('arrival').value;
+    const departure = document.getElementById('departure').value;
+    const welcomeField = document.getElementById('welcomeField');
+    const sundayField = document.getElementById('sundayField');
+    const showWelcome = !arrival || arrival < WEDDING_DAY;
+    const showSunday = !departure || departure >= POPRAVYNY_DAY;
+
+    welcomeField.hidden = !showWelcome;
+    sundayField.hidden = !showSunday;
+    if (!showWelcome) clearRadioGroup('welcome');
+    if (!showSunday) clearRadioGroup('sunday');
+  }
+
   function validateRadioGroup(fieldId, groupName) {
     const fieldEl = document.getElementById(fieldId);
     const checked = document.querySelector(`input[name="${groupName}"]:checked`);
@@ -1796,6 +1840,8 @@
     if (n === 2 && !isDeclineAttend()) {
       let ok = true;
       ['welcomeField', 'churchField', 'sundayField'].forEach(id => {
+        const fieldEl = document.getElementById(id);
+        if (fieldEl.hidden) return;
         const name = id.replace('Field', '');
         if (!validateRadioGroup(id, name)) ok = false;
       });
@@ -1835,6 +1881,8 @@
     });
     rsvpAttendingFields.querySelectorAll('.field.is-invalid').forEach(f => f.classList.remove('is-invalid'));
     closeAllDatePickers();
+    syncDeparturePickerBounds();
+    updateTravelDependentFields();
   }
 
   function syncAttendFields() {
@@ -1844,6 +1892,14 @@
     document.getElementById('guests').required = !isDecline;
     if (isDecline) clearAttendingFieldValues();
   }
+
+  document.getElementById('arrival').addEventListener('change', () => {
+    syncDeparturePickerBounds();
+    updateTravelDependentFields();
+  });
+  document.getElementById('departure').addEventListener('change', updateTravelDependentFields);
+  syncDeparturePickerBounds();
+  updateTravelDependentFields();
 
   document.querySelectorAll('input[name="attend"]').forEach(r => r.addEventListener('change', syncAttendFields));
   ['welcome', 'church', 'sunday'].forEach(name => {
