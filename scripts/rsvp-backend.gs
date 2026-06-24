@@ -19,11 +19,11 @@ const RATE_LIMIT_SECONDS = 3600;
 
 const HEADERS = [
   'Час', 'Ім\'я', 'Контакт', 'Участь', 'Гостей', 'Приїзд', 'Від\'їзд', 'Welcome 11.09',
-  'Вінчання', 'Поправини 13.09', 'Логістика та житло', 'Харчування та інше', 'Коментар'
+  'Вінчання', 'Номер Nadiya 12→13', 'Додатково про житло', 'Харчування та інше', 'Коментар'
 ];
 
 const DATA_KEYS = [
-  'name', 'contact', 'attend', 'guests', 'arrival', 'departure', 'welcome', 'church', 'sunday',
+  'name', 'contact', 'attend', 'guests', 'arrival', 'departure', 'welcome', 'church', 'room',
   'travelNotes', 'foodNotes', 'comment'
 ];
 
@@ -32,7 +32,7 @@ const ALLOWED = {
   guests: ['1', '2', '3', '4', '5+'],
   welcome: ['Так', 'Ні', 'Можливо'],
   church: ['Так', 'Ні'],
-  sunday: ['Так', 'Ні', 'Можливо']
+  room: ['Так', 'Ні, живу в місті / зупинюся у знайомих', 'Ні, забронював/забронювала самостійно']
 };
 
 const LONG_FIELDS = {
@@ -127,7 +127,7 @@ function validatePayload(raw) {
   if (ALLOWED.guests.indexOf(guests) === -1) guests = '1';
   data.guests = guests;
 
-  var optionalKeys = ['welcome', 'church', 'sunday'];
+  var optionalKeys = ['welcome', 'church', 'room'];
   for (var i = 0; i < optionalKeys.length; i++) {
     var key = optionalKeys[i];
     var val = raw[key] ? String(raw[key]) : '';
@@ -357,7 +357,7 @@ function refreshSummary(ss) {
     else if (attend === 'На жаль, ні') stats.no++;
     if (guests === '5+') stats.guests += 5;
     else stats.guests += parseInt(guests, 10) || 1;
-    if (row[9] || row[10]) stats.notesCount++;
+    if (row[10] || row[11]) stats.notesCount++;
   }
 
   sheet.clear();
@@ -392,7 +392,7 @@ function createTasks(data) {
   var name = data.name || 'Гість';
   var tasks = [];
 
-  if (data.travelNotes) tasks.push(['Логістика та житло', data.travelNotes]);
+  if (data.travelNotes) tasks.push(['Додатково про житло', data.travelNotes]);
   if (data.foodNotes) tasks.push(['Харчування та інше', data.foodNotes]);
   if (data.comment) tasks.push(['Коментар', data.comment]);
 

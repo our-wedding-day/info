@@ -18,8 +18,8 @@ def fill_attending_flow(page, contact, comment):
     page.select_option("#guests", "2")
     page.check('input[name="welcome"][value="Так"]')
     page.check('input[name="church"][value="Так"]')
-    page.check('input[name="sunday"][value="Ні"]')
-    page.fill("#travelNotes", "Трансфер з вокзалу до готелю (автотест)")
+    page.check('input[name="room"][value="Так"]')
+    page.fill("#travelNotes", "Окремі ліжка (автотест)")
     page.fill("#foodNotes", "Без горіхів (автотест)")
     page.wait_for_timeout(400)
 
