@@ -18,7 +18,9 @@
   <link rel="canonical" href="https://our-wedding-day.github.io/info/" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preload" href="assets/images/hero-ceremony.png" as="image" />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Ms+Madi&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -41,7 +43,7 @@
       --photo-filter: saturate(0.85) contrast(0.98) brightness(1);
       --font-serif: 'Playfair Display', Georgia, serif;
       --font-sans: 'Manrope', sans-serif;
-      --font-script: 'Ms Madi', cursive;
+      --font-script: 'Great Vibes', cursive;
     }
     html { scroll-behavior: smooth; }
     @media (prefers-reduced-motion: reduce) {
@@ -184,10 +186,11 @@
     }
     .hero-names {
       font-family: var(--font-script);
-      font-size: clamp(3.8rem, 14vw, 7.5rem);
-      font-weight: 400; line-height: 0.95;
+      font-size: clamp(4rem, 14vw, 7.8rem);
+      font-weight: 400; line-height: 0.9;
       color: var(--white); letter-spacing: 0.01em;
       margin: 0; padding: 0 0.5rem;
+      white-space: nowrap;
     }
     .hero-meta {
       margin-top: clamp(1.25rem, 3vw, 2rem);
@@ -815,6 +818,93 @@
     .scroll-top.visible { opacity: 1; visibility: visible; }
     .scroll-top:hover { background: var(--black); color: var(--white); border-color: var(--black); }
 
+    .music-toggle {
+      position: fixed;
+      bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+      left: 1.5rem;
+      z-index: 91;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.9rem 0.55rem 0.75rem;
+      border: 1px solid var(--black);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font-sans);
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transition: opacity 0.25s, background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .music-toggle:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+    .music-toggle.is-playing {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+    .music-toggle.is-unavailable { display: none; }
+    .music-toggle-icon { font-size: 1rem; transform: translateY(1px); }
+    .music-toggle.is-playing .music-toggle-icon { font-size: 0.82rem; letter-spacing: -0.12em; }
+    .music-toggle-label { white-space: nowrap; }
+
+    .music-gate {
+      position: fixed; inset: 0; z-index: 300;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+      background: rgba(250, 248, 244, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+    }
+    .music-gate.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .music-gate[hidden] { display: none; }
+    .music-gate-card {
+      width: min(100%, 24rem);
+      padding: 2rem 1.75rem 1.75rem;
+      background: var(--white);
+      border: 1px solid var(--line-dark);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .music-gate-text {
+      font-family: var(--font-serif); font-size: 1.1rem; line-height: 1.55;
+      color: var(--gray-800); margin-bottom: 1.5rem;
+    }
+    .music-gate-btn {
+      display: block; width: 100%;
+      padding: 0.95rem 1.25rem;
+      border: 1px solid var(--black);
+      background: var(--black); color: var(--white);
+      font-family: var(--font-sans); font-size: 0.68rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .music-gate-btn:hover { background: var(--white); color: var(--black); }
+    .music-gate-skip {
+      display: block; width: 100%; margin-top: 0.85rem;
+      padding: 0.35rem;
+      border: none; background: none;
+      font-family: var(--font-sans); font-size: 0.72rem;
+      color: var(--text-muted); text-decoration: underline;
+      text-underline-offset: 0.2em;
+      cursor: pointer;
+    }
+    .music-gate-skip:hover { color: var(--black); }
+    body.music-gate-open { overflow: hidden; }
+
     a { color: inherit; }
 
     @media (max-width: 900px) {
@@ -835,7 +925,7 @@
         font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
       }
       .nav-open .nav-mobile { display: flex; }
-      .hero-names { font-size: clamp(3rem, 16vw, 4.5rem); }
+      .hero-names { font-size: clamp(2.8rem, 11vw, 4.5rem); }
       .hero-eyebrow, .hero-meta { letter-spacing: 0.22em; }
       .contact-grid { grid-template-columns: 1fr; }
       .tl-item { grid-template-columns: 3.5rem 1px 1fr; gap: 0 1rem; }
@@ -892,6 +982,14 @@
 
 <a class="skip-link" href="#main">Перейти до контенту</a>
 
+<div class="music-gate is-hidden" id="musicGate" hidden role="dialog" aria-modal="true" aria-labelledby="musicGateText">
+  <div class="music-gate-card">
+    <p class="music-gate-text" id="musicGateText">В запрошенні є музика для атмосфери ♡</p>
+    <button type="button" class="music-gate-btn" id="musicGatePlay">Дозволити супровідну мелодію</button>
+    <button type="button" class="music-gate-skip" id="musicGateSkip">Продовжити без музики</button>
+  </div>
+</div>
+
 <header class="site-header" id="siteHeader">
   <nav id="mainNav" aria-label="Головна навігація">
     <div class="nav-left">
@@ -923,7 +1021,7 @@
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-banner">
     <p class="hero-eyebrow">Вітаємо на сторінці весілля</p>
-    <h1 class="hero-names">Сергій &amp; Вікторія</h1>
+    <h1 class="hero-names">Сергій&nbsp;&amp;&nbsp;Вікторія</h1>
     <p class="hero-meta">12 · 09 · 2026 · Івано-Франківськ</p>
   </div>
 </section>
@@ -1313,6 +1411,14 @@
   <a class="sticky-cta" id="stickyCta" href="#rsvp">Підтвердити участь</a>
 </div>
 
+<audio id="bgMusic" loop preload="auto" aria-label="David Bisbal — Cuidar nuestro amor">
+  <source src="assets/audio/cuidar-nuestro-amor.mp3" type="audio/mpeg" />
+</audio>
+<button type="button" class="music-toggle" id="musicToggle" aria-pressed="false" aria-label="Увімкнути музику">
+  <span class="music-toggle-icon" id="musicToggleIcon" aria-hidden="true">♪</span>
+  <span class="music-toggle-label" id="musicToggleLabel">Музика</span>
+</button>
+
 <script>
   // ▼ URL і токен мають збігатися з Apps Script (див. scripts/rsvp-backend.gs)
   const RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyqR_fuixcXhvdVJnYt50AVud1PTl8pHCoRBTgAeeSkG5Mf1R11-5X_bFTvJHYHD4t-pA/exec';
@@ -1445,6 +1551,127 @@
   stickyCta.addEventListener('click', () => setNavOpen(false));
 
   scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  const bgMusic = document.getElementById('bgMusic');
+  const musicToggle = document.getElementById('musicToggle');
+  const musicToggleIcon = document.getElementById('musicToggleIcon');
+  const musicToggleLabel = document.getElementById('musicToggleLabel');
+  const musicGate = document.getElementById('musicGate');
+  const musicGatePlay = document.getElementById('musicGatePlay');
+  const musicGateSkip = document.getElementById('musicGateSkip');
+  const MUSIC_MUTED_KEY = 'wedding_music_muted';
+  const MUSIC_TARGET_VOLUME = 0.24;
+  let musicFadeTimer = null;
+
+  if (bgMusic && musicToggle) {
+    function isAutoplayBlocked() {
+      return sessionStorage.getItem(MUSIC_MUTED_KEY) === '1';
+    }
+
+    function clearMusicFade() {
+      if (musicFadeTimer) {
+        clearInterval(musicFadeTimer);
+        musicFadeTimer = null;
+      }
+    }
+
+    function fadeMusicIn() {
+      clearMusicFade();
+      bgMusic.volume = 0;
+      const steps = 24;
+      const stepMs = 90;
+      let step = 0;
+      musicFadeTimer = setInterval(() => {
+        step += 1;
+        bgMusic.volume = Math.min(MUSIC_TARGET_VOLUME, (step / steps) * MUSIC_TARGET_VOLUME);
+        if (step >= steps) clearMusicFade();
+      }, stepMs);
+    }
+
+    function setMusicUi(playing) {
+      musicToggle.classList.toggle('is-playing', playing);
+      musicToggle.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      musicToggle.setAttribute('aria-label', playing ? 'Поставити музику на паузу' : 'Увімкнути музику');
+      musicToggleIcon.textContent = playing ? '❚❚' : '♪';
+      if (musicToggleLabel) musicToggleLabel.textContent = playing ? 'Пауза' : 'Музика';
+    }
+
+    function showMusicGate() {
+      if (!musicGate || isAutoplayBlocked()) return;
+      musicGate.hidden = false;
+      document.body.classList.add('music-gate-open');
+      requestAnimationFrame(() => musicGate.classList.remove('is-hidden'));
+    }
+
+    function hideMusicGate() {
+      if (!musicGate || musicGate.hidden) return;
+      musicGate.classList.add('is-hidden');
+      document.body.classList.remove('music-gate-open');
+      const onEnd = (e) => {
+        if (e.propertyName !== 'opacity') return;
+        musicGate.hidden = true;
+        musicGate.removeEventListener('transitionend', onEnd);
+      };
+      musicGate.addEventListener('transitionend', onEnd);
+    }
+
+    async function playMusic({ fadeIn = true } = {}) {
+      try {
+        clearMusicFade();
+        if (fadeIn) bgMusic.volume = 0;
+        else bgMusic.volume = MUSIC_TARGET_VOLUME;
+        await bgMusic.play();
+        if (fadeIn) fadeMusicIn();
+        setMusicUi(true);
+        sessionStorage.removeItem(MUSIC_MUTED_KEY);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    function pauseMusic() {
+      clearMusicFade();
+      bgMusic.pause();
+      bgMusic.volume = MUSIC_TARGET_VOLUME;
+      setMusicUi(false);
+      sessionStorage.setItem(MUSIC_MUTED_KEY, '1');
+    }
+
+    musicToggle.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      if (bgMusic.paused) await playMusic();
+      else pauseMusic();
+    });
+
+    async function openSiteWithMusic() {
+      hideMusicGate();
+      const started = await playMusic();
+      if (!started && !isAutoplayBlocked()) showMusicGate();
+    }
+
+    function continueWithoutMusic() {
+      sessionStorage.setItem(MUSIC_MUTED_KEY, '1');
+      clearMusicFade();
+      bgMusic.pause();
+      setMusicUi(false);
+      hideMusicGate();
+    }
+
+    if (musicGatePlay) musicGatePlay.addEventListener('click', openSiteWithMusic);
+    if (musicGateSkip) musicGateSkip.addEventListener('click', continueWithoutMusic);
+
+    bgMusic.addEventListener('error', () => {
+      musicToggle.classList.add('is-unavailable');
+      hideMusicGate();
+    });
+
+    (async () => {
+      if (isAutoplayBlocked()) return;
+      const started = await playMusic();
+      if (!started) showMusicGate();
+    })();
+  }
 
   const wDate = new Date('2026-09-12T11:00:00');
   const countdownEl = document.getElementById('countdown');
