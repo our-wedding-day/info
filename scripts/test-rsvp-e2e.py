@@ -7,8 +7,19 @@ from playwright.sync_api import sync_playwright
 URL = "https://our-wedding-day.github.io/info/#rsvp"
 
 
+def dismiss_music_gate(page):
+    skip = page.locator("#musicGateSkip")
+    try:
+        if skip.is_visible(timeout=3000):
+            skip.click()
+            page.wait_for_timeout(400)
+    except Exception:
+        pass
+
+
 def fill_attending_flow(page, contact, comment):
     page.goto(URL, wait_until="networkidle", timeout=60000)
+    dismiss_music_gate(page)
     page.fill("#name", "Тест Cursor Автотест")
     page.fill("#contact", contact)
     page.check('input[name="attend"][value="Так, буду"]')
@@ -28,6 +39,7 @@ def fill_attending_flow(page, contact, comment):
 
 def fill_decline_flow(page, contact):
     page.goto(URL, wait_until="networkidle", timeout=60000)
+    dismiss_music_gate(page)
     page.fill("#name", "Тест Cursor Відмова")
     page.fill("#contact", contact)
     page.check('input[name="attend"][value="На жаль, ні"]')
